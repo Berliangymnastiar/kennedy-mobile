@@ -1,57 +1,82 @@
-import React from 'react';
+// import axios from 'axios';
+import React, {useState} from 'react';
 import {
   ImageBackground,
-  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
+import {useDispatch} from 'react-redux';
 
 import imageBackground from '../../assets/images/login-image.png';
+import {loginAction} from '../../redux/action/authAction';
+import {vehicleAction} from '../../redux/action/vehicleAction';
 import styles from './style';
+// import config from '../../../config';
 
-const Login = ({navigation}) => (
-  <ScrollView style={styles.container}>
-    <ImageBackground
-      source={imageBackground}
-      resizeMode="cover"
-      style={styles.image}>
-      <Text style={styles.text}>LET’S EXPLORE THE WORLD </Text>
-      <TextInput
-        style={styles.textInput}
-        placeholder="Username"
-        placeholderTextColor={'black'}
-      />
-      <TextInput
-        style={styles.textInputPassword}
-        placeholder="Password"
-        placeholderTextColor={'black'}
-        secureTextEntry
-      />
-      <Text style={styles.forgotPass} onPress={() => {}}>
-        Forgot Password
-      </Text>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('Register');
-        }}>
-        <View style={styles.button}>
-          <Text style={styles.buttonText}>Login</Text>
-        </View>
-      </TouchableOpacity>
-      <View style={styles.textConfirmation}>
-        <Text style={styles.textHaveAccount}>Don’t have account?</Text>
+function Login({navigation}) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+
+  const onSubmit = () => {
+    const data = new URLSearchParams();
+    data.append('email', email);
+    data.append('password', password);
+
+    dispatch(loginAction(data, navigation));
+    dispatch(vehicleAction);
+  };
+  return (
+    <>
+      <ImageBackground
+        source={imageBackground}
+        resizeMode="cover"
+        style={styles.image}>
+        <Text style={styles.text}>LET’S EXPLORE THE WORLD </Text>
+        {/* <Text style={{color: 'black', fontSize: 42}}>{config.API_URL}</Text> */}
+        <TextInput
+          style={styles.textInput}
+          placeholder="Email"
+          keyboardType="email-address"
+          placeholderTextColor="#696868"
+          value={email}
+          onChangeText={value => setEmail(value)}
+        />
+        <TextInput
+          style={styles.textInputPassword}
+          placeholder="Password"
+          placeholderTextColor={'black'}
+          value={password}
+          onChangeText={value => setPassword(value)}
+          secureTextEntry
+        />
         <Text
-          style={styles.textSignUp}
+          style={styles.forgotPass}
           onPress={() => {
-            navigation.navigate('Register');
+            navigation.navigate('Forgot-Password');
           }}>
-          Sign up now
+          Forgot Password
         </Text>
-      </View>
-    </ImageBackground>
-  </ScrollView>
-);
+        <TouchableOpacity onPress={onSubmit}>
+          <View style={styles.button}>
+            <Text style={styles.buttonText}>Login</Text>
+          </View>
+        </TouchableOpacity>
+        <View style={styles.textConfirmation}>
+          <Text style={styles.textHaveAccount}>Don’t have account?</Text>
+          <Text
+            style={styles.textSignUp}
+            onPress={() => {
+              navigation.navigate('Register');
+            }}>
+            Sign up now
+          </Text>
+        </View>
+      </ImageBackground>
+    </>
+  );
+}
 
 export default Login;

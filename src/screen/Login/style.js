@@ -1,12 +1,13 @@
 import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+  // container: {
+  //   flex: 1,
+  // },
   image: {
     flex: 1,
     padding: 31,
+    justifyContent: 'center',
   },
   text: {
     color: 'white',
@@ -20,17 +21,21 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: 'white',
     borderRadius: 8,
+    width: '100%',
     padding: 16,
     backgroundColor: 'white',
     color: 'black',
     opacity: 0.4,
     marginTop: 200,
+    fontWeight: '600',
+    fontSize: 16,
   },
   textInputPassword: {
     textAlign: 'left',
     borderWidth: 1,
     borderColor: 'white',
     borderRadius: 8,
+    width: '100%',
     padding: 16,
     backgroundColor: 'white',
     color: 'black',
@@ -40,6 +45,7 @@ export default StyleSheet.create({
   forgotPass: {
     color: 'white',
     marginTop: 10,
+    textAlign: 'left',
   },
   button: {
     backgroundColor: '#FFCD61',

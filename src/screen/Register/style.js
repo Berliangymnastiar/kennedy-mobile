@@ -1,12 +1,13 @@
 import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+  // container: {
+  //   flex: 1,
+  // },
   image: {
     flex: 1,
     padding: 31,
+    justifyContent: 'center',
   },
   text: {
     color: 'white',
@@ -20,6 +21,7 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: 'white',
     borderRadius: 8,
+    width: '100%',
     padding: 16,
     backgroundColor: 'white',
     color: 'black',
@@ -31,6 +33,7 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: 'white',
     borderRadius: 8,
+    width: '100%',
     padding: 16,
     backgroundColor: 'white',
     color: 'black',
@@ -42,6 +45,7 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: 'white',
     borderRadius: 8,
+    width: '100%',
     padding: 16,
     backgroundColor: 'white',
     color: 'black',

@@ -1,0 +1,138 @@
+import {StyleSheet} from 'react-native';
+
+export default StyleSheet.create({
+  //   container: {
+  //     flex: 1,
+  //     backgroundColor: '#FFFFFF',
+  //   },
+  headerImage: {
+    width: 'auto',
+    height: 250,
+    paddingHorizontal: 18,
+    paddingTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  wrapperBack: {
+    // padding: 8,
+    marginTop: 10,
+  },
+  heart: {
+    padding: 18,
+    marginTop: 10,
+  },
+  wrapperContent: {
+    flex: 3,
+    marginTop: 14,
+    paddingHorizontal: 18,
+  },
+  chatAndVehicle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  nameVehicle: {
+    fontSize: 28,
+    fontWeight: '600',
+    color: '#4E4E4E',
+  },
+  textPerson: {
+    fontSize: 16,
+    color: '#4E4E4E',
+    marginTop: 14,
+    fontWeight: '300',
+  },
+  textPayment: {
+    fontSize: 16,
+    color: '#4E4E4E',
+    fontWeight: '300',
+    marginTop: 5,
+  },
+  textStatusGreen: {
+    fontSize: 16,
+    color: '#087E0D',
+    fontWeight: '700',
+    marginTop: 5,
+  },
+  textStatusRed: {
+    fontSize: 16,
+    color: '#9B0A0A',
+    fontWeight: '700',
+    marginTop: 5,
+  },
+  wrapperLocation: {
+    marginTop: 13,
+    flexDirection: 'row',
+  },
+  textStreet: {
+    color: '#9A9A9D',
+    fontSize: 16,
+    fontWeight: '400',
+    marginLeft: 13,
+    marginTop: 6,
+  },
+  textAmount: {
+    color: '#393939',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  button: {
+    backgroundColor: '#FFCD61',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 4,
+    height: 22,
+    width: 21,
+  },
+  buttonText: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  wrapperSelect: {
+    marginTop: 13,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  textInput: {
+    textAlign: 'left',
+    borderWidth: 1,
+    borderColor: 'white',
+    borderRadius: 8,
+    width: '100%',
+    padding: 16,
+    backgroundColor: 'black',
+    color: 'black',
+    opacity: 0.4,
+    marginTop: 200,
+  },
+  picker: {
+    flexDirection: 'row',
+    marginTop: 28,
+    justifyContent: 'space-between',
+  },
+  date: {
+    backgroundColor: '#CACACA',
+    justifyContent: 'center',
+    borderRadius: 8,
+    paddingHorizontal: 18,
+    flex: 1,
+    height: 70,
+  },
+  pickerDay: {
+    backgroundColor: '#CACACA',
+    justifyContent: 'center',
+    borderRadius: 8,
+    paddingHorizontal: 18,
+    // flex: 2,
+    height: 70,
+    width: '50%',
+  },
+  buttonReservation: {
+    backgroundColor: '#FFCD61',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 15,
+    padding: 13,
+    marginTop: 24,
+  },
+});
