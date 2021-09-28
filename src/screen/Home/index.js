@@ -2,11 +2,18 @@ import axios from 'axios';
 import styles from './style';
 import {useDispatch, useSelector} from 'react-redux';
 import React, {useEffect, useState} from 'react';
-import {View, Text, Image, ScrollView, Pressable} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  Pressable,
+  ImageBackground,
+  TextInput,
+} from 'react-native';
 import CardImage from '../../component/CardImage';
 
 function Home({navigation}) {
-  const [vehicles, setVehicle] = useState([]);
   const [motorbikes, setMotorbikes] = useState([]);
   const [cars, setCars] = useState([]);
   const [bikes, setBikes] = useState([]);
@@ -46,11 +53,16 @@ function Home({navigation}) {
   }, []);
   return (
     <ScrollView style={styles.container}>
-      <Image
+      <ImageBackground
         style={styles.homeImage}
         source={require('../../assets/images/home-image.png')}
-        resizeMode="cover"
-      />
+        resizeMode="cover">
+        <TextInput
+          style={styles.textInputPassword}
+          placeholder="Search"
+          placeholderTextColor={'white'}
+        />
+      </ImageBackground>
       <View style={styles.viewSection}>
         <Text style={styles.textCategory}>Cars</Text>
         <Text style={styles.viewMore}>

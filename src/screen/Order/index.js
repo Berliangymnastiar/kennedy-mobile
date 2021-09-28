@@ -17,6 +17,7 @@ import {useSelector} from 'react-redux';
 import axios from 'axios';
 
 function Orders(props) {
+  // console.log(props.navigation.navigate);
   const date = new Date();
   const formatedDate =
     date.getFullYear() +
@@ -39,6 +40,7 @@ function Orders(props) {
   const token = useSelector(state => state.auth.token);
   const id = props.route.params.id;
   const userId = useSelector(state => state.auth.userInfo[0].id);
+  const totalPrice = price * totalVehicle;
 
   useEffect(() => {
     axios
@@ -67,12 +69,18 @@ function Orders(props) {
     data.append('booking_duration', bookingDuration);
     data.append('total_vehicle', totalVehicle);
     data.append('date', formatedDate);
+    data.append('total_price', totalPrice);
 
     console.log(data);
     axios
       .post(`http://192.168.1.100:8000/transactions`, data)
       .then(res => {
-        console.log(res);
+        const transactionId = res.data.result.insertId;
+        props.navigation.navigate('Payment1', {
+          id: transactionId,
+          totalPrice: totalPrice,
+          picture: image,
+        });
         return ToastAndroid.show('Reservation success!', ToastAndroid.SHORT);
       })
       .catch(err => console.log(err));
@@ -97,7 +105,7 @@ function Orders(props) {
         <View style={styles.wrapperContent}>
           <View style={styles.chatAndVehicle}>
             <Text style={styles.nameVehicle}>
-              {name} {'\n'}Rp. {price}/day
+              {name} {'\n'}Rp. {price * totalVehicle}/day
             </Text>
             <Pressable>
               <Icon name="chatbubble-outline" size={30} color="#FFCD61"></Icon>

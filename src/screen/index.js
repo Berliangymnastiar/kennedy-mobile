@@ -7,6 +7,10 @@ import Chat from './Chat';
 import Profile from './Profile';
 import Orders from './Order';
 import UpdateProfile from './UpdateProfile';
+import Payment1 from './Payment1';
+import Payment2 from './Payment2';
+import Payment3 from './Payment3';
+import FinishPayment from './FinishPayment';
 
 export {
   Login,
@@ -18,4 +22,8 @@ export {
   Profile,
   Orders,
   UpdateProfile,
+  Payment1,
+  Payment2,
+  Payment3,
+  FinishPayment,
 };

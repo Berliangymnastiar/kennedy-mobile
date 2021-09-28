@@ -3,11 +3,15 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 import {createStackNavigator} from '@react-navigation/stack';
 import {
   Chat,
+  FinishPayment,
   ForgotPassword,
   History,
   Home,
   Login,
   Orders,
+  Payment1,
+  Payment2,
+  Payment3,
   Profile,
   Register,
   UpdateProfile,
@@ -34,6 +38,26 @@ function HomeStack() {
       <Stack.Screen
         name="Orders"
         component={Orders}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Payment1"
+        component={Payment1}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Payment2"
+        component={Payment2}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Payment3"
+        component={Payment3}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Finish-Payment"
+        component={FinishPayment}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
