@@ -14,6 +14,7 @@ import {
   Payment3,
   Profile,
   Register,
+  Search,
   UpdateProfile,
 } from '../screen';
 import {NavigationContainer} from '@react-navigation/native';
@@ -30,11 +31,12 @@ function HomeStack() {
   console.log(getToken);
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{headerShown: false}}
-      />
+      <Stack.Screen name="Home" options={{headerShown: false}}>
+        {props => <Home {...props} />}
+      </Stack.Screen>
+      <Stack.Screen name="Search" options={{headerShown: false}}>
+        {props => <Search {...props} />}
+      </Stack.Screen>
       <Stack.Screen
         name="Orders"
         component={Orders}

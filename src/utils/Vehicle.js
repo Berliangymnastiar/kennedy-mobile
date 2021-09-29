@@ -1,6 +1,21 @@
 import axios from 'axios';
-const url = 'http://192.168.1.100:8000';
+import {API_URL} from '@env';
+// import {useSelector} from 'react-redux';
+// const token = useSelector(state => state.auth.token);
 
-export const getVehicles = params => {
-  return axios.get(url, {params: params});
+export const getVehicles = query => {
+  const body = {};
+  return axios.get(`${API_URL}/vehicles${query}`, body);
+};
+
+export const getVehicleCars = () => {
+  return axios.get(`${API_URL}/vehicles?filter=cars`);
+};
+
+export const getVehicleMotorbikes = () => {
+  return axios.get(`${API_URL}/vehicles?filter=motorbike`);
+};
+
+export const getVehicleBikes = () => {
+  return axios.get(`${API_URL}/vehicles?filter=bikes`);
 };

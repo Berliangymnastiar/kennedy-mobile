@@ -16,18 +16,15 @@ const authPersistConfig = {
   storage: AsyncStorage,
 };
 
-const vehiclePersistConfig = {
-  key: 'vehicle',
-  storage: AsyncStorage,
-};
+// const vehiclePersistConfig = {
+//   key: 'vehicle',
+//   storage: AsyncStorage,
+// };
 
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
-  vehicle: persistReducer(vehiclePersistConfig, vehicleReducer),
+  // vehicle: persistReducer(vehiclePersistConfig, vehicleReducer),
+  vehicle: vehicleReducer,
 });
-
-// const reducers = combineReducers({
-//   authReducer,
-// });
 
 export default persistReducer(rootPersistConfig, rootReducer);

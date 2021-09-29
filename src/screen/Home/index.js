@@ -1,129 +1,159 @@
-import axios from 'axios';
 import styles from './style';
-import {useDispatch, useSelector} from 'react-redux';
-import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import React, {Component} from 'react';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {
   View,
   Text,
   Image,
   ScrollView,
   Pressable,
-  ImageBackground,
   TextInput,
 } from 'react-native';
 import CardImage from '../../component/CardImage';
+import {
+  getBikes,
+  getCars,
+  getMotorbikes,
+  vehicleAction,
+} from '../../redux/action/vehicleAction';
 
-function Home({navigation}) {
-  const [motorbikes, setMotorbikes] = useState([]);
-  const [cars, setCars] = useState([]);
-  const [bikes, setBikes] = useState([]);
-  const getToken = useSelector(state => state.auth);
-  // const vehicle = useSelector(state => state.vehicle);
-  // console.log(vehicle);
-  const token = getToken.token;
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const getByCategory = filter => {
-      axios
-        .get('http://192.168.1.100:8000/vehicles', {
-          params: {filter: filter, limit: 4},
-          headers: {
-            'x-access-token': `Bearer ${token}`,
-          },
-        })
-        .then(({data}) => {
-          if (filter === 'motorbike') {
-            setMotorbikes(data.result);
-          }
-          if (filter === 'bikes') {
-            setBikes(data.result);
-          }
-          if (filter === 'cars') {
-            setCars(data.result);
-          }
-        })
-        .catch(err => console.log(err));
+class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      vehicleName: '',
     };
+  }
 
-    getByCategory('motorbike');
-    getByCategory('bikes');
-    getByCategory('cars');
-  }, []);
-  return (
-    <ScrollView style={styles.container}>
-      <ImageBackground
-        style={styles.homeImage}
-        source={require('../../assets/images/home-image.png')}
-        resizeMode="cover">
-        <TextInput
-          style={styles.textInputPassword}
-          placeholder="Search"
-          placeholderTextColor={'white'}
+  searchName = input => {
+    this.setState({vehicleName: input});
+  };
+
+  searchHandler = () => {
+    const query = `?name=${this.state.vehicleName}`;
+    this.props.navigation.navigate('Search', {query: query});
+  };
+
+  componentDidMount() {
+    this.props.getByCars();
+    this.props.getByMotorbike();
+    this.props.getByBikes();
+  }
+
+  render() {
+    return (
+      <ScrollView style={styles.container}>
+        <Image
+          style={styles.homeImage}
+          source={require('../../assets/images/home-image.png')}
         />
-      </ImageBackground>
-      <View style={styles.viewSection}>
-        <Text style={styles.textCategory}>Cars</Text>
-        <Text style={styles.viewMore}>
-          View more{'  '}
-          <Image source={require('../../assets/images/chevron-right.png')} />
-        </Text>
-      </View>
-      <ScrollView horizontal={true} style={styles.viewSectionImage}>
-        {cars.map(vehicle => {
-          return (
-            <Pressable
-              key={vehicle.id}
-              onPress={async () => {
-                await navigation.navigate('Orders', {id: vehicle.id});
-              }}>
-              <CardImage key={vehicle.id} picture={vehicle.picture} />
-            </Pressable>
-          );
-        })}
+        <View style={styles.wrapperInputSearch}>
+          <TextInput
+            style={styles.inputSearch}
+            placeholder="Search Vehicle"
+            placeholderTextColor="#fff"
+            keyboardType={'email-address'}
+            onChangeText={this.searchName}
+          />
+          <Icon
+            name="search-outline"
+            style={styles.searchIcon}
+            onPress={this.searchHandler}
+            onPressIn={this.searchHandler}
+          />
+        </View>
+        <View style={styles.viewSection}>
+          <Text style={styles.textCategory}>Cars</Text>
+          <Text style={styles.viewMore}>
+            View more{'  '}
+            <Image source={require('../../assets/images/chevron-right.png')} />
+          </Text>
+        </View>
+        <ScrollView horizontal={true} style={styles.viewSectionImage}>
+          {this.props.vehicle.cars.map(vehicle => {
+            return (
+              <Pressable
+                key={vehicle.id}
+                onPress={async () => {
+                  await this.props.navigation.navigate('Orders', {
+                    id: vehicle.id,
+                  });
+                }}>
+                <CardImage key={vehicle.id} picture={vehicle.picture} />
+              </Pressable>
+            );
+          })}
+        </ScrollView>
+        <View style={styles.viewSection}>
+          <Text style={styles.textCategory}>Motorbikes</Text>
+          <Text style={styles.viewMore}>
+            View more{'  '}
+            <Image source={require('../../assets/images/chevron-right.png')} />
+          </Text>
+        </View>
+        <ScrollView horizontal={true} style={styles.viewSectionImage}>
+          {this.props.vehicle.motorbikes.map(vehicle => {
+            return (
+              <Pressable
+                key={vehicle.id}
+                onPress={async () => {
+                  await this.props.navigation.navigate('Orders', {
+                    id: vehicle.id,
+                  });
+                }}>
+                <CardImage key={vehicle.id} picture={vehicle.picture} />
+              </Pressable>
+            );
+          })}
+        </ScrollView>
+        <View style={styles.viewSection}>
+          <Text style={styles.textCategory}>Bikes</Text>
+          <Text style={styles.viewMore}>
+            View more{'  '}
+            <Image source={require('../../assets/images/chevron-right.png')} />
+          </Text>
+        </View>
+        <ScrollView horizontal={true} style={styles.viewSectionImage}>
+          {this.props.vehicle.bikes.map(vehicle => {
+            return (
+              <Pressable
+                key={vehicle.id}
+                onPress={() => {
+                  this.props.navigation.navigate('Orders', {id: vehicle.id});
+                }}>
+                <CardImage key={vehicle.id} picture={vehicle.picture} />
+              </Pressable>
+            );
+          })}
+        </ScrollView>
       </ScrollView>
-      <View style={styles.viewSection}>
-        <Text style={styles.textCategory}>Motorbikes</Text>
-        <Text style={styles.viewMore}>
-          View more{'  '}
-          <Image source={require('../../assets/images/chevron-right.png')} />
-        </Text>
-      </View>
-      <ScrollView horizontal={true} style={styles.viewSectionImage}>
-        {motorbikes.map(vehicle => {
-          return (
-            <Pressable
-              key={vehicle.id}
-              onPress={async () => {
-                await navigation.navigate('Orders', {id: vehicle.id});
-              }}>
-              <CardImage key={vehicle.id} picture={vehicle.picture} />
-            </Pressable>
-          );
-        })}
-      </ScrollView>
-      <View style={styles.viewSection}>
-        <Text style={styles.textCategory}>Bikes</Text>
-        <Text style={styles.viewMore}>
-          View more{'  '}
-          <Image source={require('../../assets/images/chevron-right.png')} />
-        </Text>
-      </View>
-      <ScrollView horizontal={true} style={styles.viewSectionImage}>
-        {bikes.map(vehicle => {
-          return (
-            <Pressable
-              key={vehicle.id}
-              onPress={async () => {
-                await navigation.navigate('Orders', {id: vehicle.id});
-              }}>
-              <CardImage key={vehicle.id} picture={vehicle.picture} />
-            </Pressable>
-          );
-        })}
-      </ScrollView>
-    </ScrollView>
-  );
+    );
+  }
 }
-export default Home;
+
+const mapStateToProps = ({auth, vehicle}) => {
+  return {
+    auth,
+    vehicle,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getAllVehicles: query => {
+      dispatch(vehicleAction(query));
+    },
+    getByCars: () => {
+      dispatch(getCars());
+    },
+    getByMotorbike: () => {
+      dispatch(getMotorbikes());
+    },
+    getByBikes: () => {
+      dispatch(getBikes());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
