@@ -17,6 +17,24 @@ export default StyleSheet.create({
     marginHorizontal: 20,
     bottom: 230,
   },
+  wrapperButton: {
+    marginTop: -100,
+  },
+  button: {
+    backgroundColor: '#FFCD61',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 15,
+    padding: 13,
+    marginTop: 24,
+    bottom: 70,
+    marginHorizontal: 20,
+  },
+  buttonText: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
   searchIcon: {
     position: 'absolute',
     right: 20,
@@ -34,6 +52,7 @@ export default StyleSheet.create({
     backgroundColor: 'rgba(36, 25, 25, 0.5)',
     color: '#fff',
     borderRadius: 10,
+    fontFamily: 'Nunito-Bold',
   },
   // homeImage: {
   //   width: '100%',
@@ -58,17 +77,20 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 13,
+    // marginTop
   },
   textCategory: {
     fontSize: 22,
     fontWeight: '600',
     marginTop: 22,
     color: '#393939',
+    fontFamily: 'Nunito-Bold',
   },
   viewMore: {
     fontSize: 12,
     fontWeight: '600',
     marginTop: 28,
+    fontFamily: 'Nunito-Bold',
   },
   viewSectionImage: {
     flexDirection: 'row',

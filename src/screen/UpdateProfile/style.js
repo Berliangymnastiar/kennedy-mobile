@@ -13,7 +13,7 @@ export default StyleSheet.create({
   updateProfile: {
     marginLeft: 24,
     fontSize: 20,
-    fontWeight: '600',
+    fontFamily: 'Nunito-Bold',
   },
   wrapperPhoto: {
     alignItems: 'center',
@@ -34,13 +34,15 @@ export default StyleSheet.create({
     marginLeft: 5,
     marginTop: 4,
     marginRight: 5,
+    fontFamily: 'Nunito-Regular',
   },
   wrapperInput: {
     marginTop: 22,
   },
   label: {
-    color: '#B8B8B8',
+    color: '#393939',
     fontWeight: '600',
+    fontFamily: 'Nunito-Bold',
   },
   textInput: {
     textAlign: 'left',
@@ -51,7 +53,6 @@ export default StyleSheet.create({
     padding: 16,
     backgroundColor: 'transparent',
     color: 'black',
-    opacity: 0.4,
     marginVertical: 10,
   },
   button: {
@@ -64,7 +65,7 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: 'black',
-    fontWeight: 'bold',
     fontSize: 18,
+    fontFamily: 'Nunito-Bold',
   },
 });

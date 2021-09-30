@@ -12,6 +12,7 @@ import Payment2 from './Payment2';
 import Payment3 from './Payment3';
 import FinishPayment from './FinishPayment';
 import Search from './Search';
+import ViewMore from './ViewMore';
 
 export {
   Login,
@@ -28,4 +29,5 @@ export {
   Payment3,
   FinishPayment,
   Search,
+  ViewMore,
 };

@@ -12,6 +12,7 @@ export default StyleSheet.create({
   text: {
     fontSize: 18,
     fontWeight: '400',
+    fontFamily: 'Nunito-Regular',
   },
   pressable: {
     flexDirection: 'row',
@@ -27,8 +28,8 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: 'black',
-    fontWeight: 'bold',
     fontSize: 18,
+    fontFamily: 'Nunito-Bold',
   },
   wrapperButton: {
     padding: 18,

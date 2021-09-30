@@ -1,23 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {API_URL} from '@env';
-import {View, Text, TextInput, Pressable, Image} from 'react-native';
+import {View, Text, Pressable, Image} from 'react-native';
 import styles from './style';
-import Icon from 'react-native-vector-icons/Ionicons';
 import {connect} from 'react-redux';
 import {vehicleAction} from '../../redux/action/vehicleAction';
+import {ScrollView} from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-const Search = props => {
-  console.log(props.vehicle.vehicleData);
-  const [vehicleName, setVehicleName] = useState('');
-
-  const searchName = input => {
-    setVehicleName({vehicleName: input});
-  };
-
-  const searchHandler = () => {
-    const query = `?name=${vehicleName.vehicleName}`;
-    props.getAllVehicles(query);
-  };
+const ViewMore = props => {
+  const title = props.route.params.title;
 
   useEffect(() => {
     const {query} = props.route.params;
@@ -26,26 +17,13 @@ const Search = props => {
 
   return (
     <View style={styles.container}>
-      <View>
-        <TextInput
-          style={styles.inputSearch}
-          placeholder="Search Vehicle"
-          placeholderTextColor="#000000"
-          keyboardType={'email-address'}
-          onChangeText={searchName}
-        />
-        <Icon
-          name="search-outline"
-          style={styles.searchIcon}
-          onPress={searchHandler}
-          onPressIn={searchHandler}
-        />
-      </View>
-      <View style={styles.wrapperFilter}>
-        <Icon name="filter-outline" size={20} style={styles.iconFilter} />
-        <Text style={styles.filter}>Filter</Text>
-      </View>
-      <View style={styles.wrapperData}>
+      <Pressable
+        style={styles.wrapperBack}
+        onPress={() => props.navigation.goBack()}>
+        <Icon name="arrow-back" size={26}></Icon>
+        <Text style={styles.updateProfile}>{title}</Text>
+      </Pressable>
+      <ScrollView style={styles.wrapperData}>
         {props.vehicle.vehicleData.map(vehicle => {
           return (
             <Pressable
@@ -77,7 +55,7 @@ const Search = props => {
             </Pressable>
           );
         })}
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -96,4 +74,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+export default connect(mapStateToProps, mapDispatchToProps)(ViewMore);

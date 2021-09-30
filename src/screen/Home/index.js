@@ -9,6 +9,7 @@ import {
   ScrollView,
   Pressable,
   TextInput,
+  TouchableOpacity,
 } from 'react-native';
 import CardImage from '../../component/CardImage';
 import {
@@ -33,6 +34,27 @@ class Home extends Component {
   searchHandler = () => {
     const query = `?name=${this.state.vehicleName}`;
     this.props.navigation.navigate('Search', {query: query});
+  };
+
+  getCarsHandler = () => {
+    const query = `?filter=cars`;
+    this.props.navigation.navigate('View-More', {query: query, title: 'Cars'});
+  };
+
+  getMotorbikesHandler = () => {
+    const query = `?filter=motorbike`;
+    this.props.navigation.navigate('View-More', {
+      query: query,
+      title: 'Motorbike',
+    });
+  };
+
+  getBikesHandler = () => {
+    const query = `?filter=bikes`;
+    this.props.navigation.navigate('View-More', {
+      query: query,
+      title: 'Bikes',
+    });
   };
 
   componentDidMount() {
@@ -63,12 +85,23 @@ class Home extends Component {
             onPressIn={this.searchHandler}
           />
         </View>
+        {this.props.auth.userInfo[0].roles === 'admin' && (
+          <TouchableOpacity style={styles.wrapperButton}>
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>Add New Item</Text>
+            </View>
+          </TouchableOpacity>
+        )}
         <View style={styles.viewSection}>
           <Text style={styles.textCategory}>Cars</Text>
-          <Text style={styles.viewMore}>
-            View more{'  '}
-            <Image source={require('../../assets/images/chevron-right.png')} />
-          </Text>
+          <Pressable onPress={this.getCarsHandler}>
+            <Text style={styles.viewMore}>
+              View more{'  '}
+              <Image
+                source={require('../../assets/images/chevron-right.png')}
+              />
+            </Text>
+          </Pressable>
         </View>
         <ScrollView horizontal={true} style={styles.viewSectionImage}>
           {this.props.vehicle.cars.map(vehicle => {
@@ -87,10 +120,14 @@ class Home extends Component {
         </ScrollView>
         <View style={styles.viewSection}>
           <Text style={styles.textCategory}>Motorbikes</Text>
-          <Text style={styles.viewMore}>
-            View more{'  '}
-            <Image source={require('../../assets/images/chevron-right.png')} />
-          </Text>
+          <Pressable onPress={this.getMotorbikesHandler}>
+            <Text style={styles.viewMore}>
+              View more{'  '}
+              <Image
+                source={require('../../assets/images/chevron-right.png')}
+              />
+            </Text>
+          </Pressable>
         </View>
         <ScrollView horizontal={true} style={styles.viewSectionImage}>
           {this.props.vehicle.motorbikes.map(vehicle => {
@@ -109,10 +146,14 @@ class Home extends Component {
         </ScrollView>
         <View style={styles.viewSection}>
           <Text style={styles.textCategory}>Bikes</Text>
-          <Text style={styles.viewMore}>
-            View more{'  '}
-            <Image source={require('../../assets/images/chevron-right.png')} />
-          </Text>
+          <Pressable onPress={this.getBikesHandler}>
+            <Text style={styles.viewMore}>
+              View more{'  '}
+              <Image
+                source={require('../../assets/images/chevron-right.png')}
+              />
+            </Text>
+          </Pressable>
         </View>
         <ScrollView horizontal={true} style={styles.viewSectionImage}>
           {this.props.vehicle.bikes.map(vehicle => {

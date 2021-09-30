@@ -50,6 +50,7 @@ export default StyleSheet.create({
   wrapperContainer: {
     marginHorizontal: 18,
     flexDirection: 'row',
+    marginTop: 20,
   },
   image: {
     width: 101,
@@ -84,5 +85,14 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 5,
     color: '#393939',
+  },
+  wrapperBack: {
+    flexDirection: 'row',
+    marginTop: 10,
+  },
+  updateProfile: {
+    marginLeft: 24,
+    fontSize: 20,
+    fontWeight: '600',
   },
 });

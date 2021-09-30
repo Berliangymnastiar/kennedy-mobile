@@ -16,6 +16,7 @@ import {
   Register,
   Search,
   UpdateProfile,
+  ViewMore,
 } from '../screen';
 import {NavigationContainer} from '@react-navigation/native';
 import defaultPhoto from '../assets/images/default-photo.png';
@@ -36,6 +37,9 @@ function HomeStack() {
       </Stack.Screen>
       <Stack.Screen name="Search" options={{headerShown: false}}>
         {props => <Search {...props} />}
+      </Stack.Screen>
+      <Stack.Screen name="View-More" options={{headerShown: false}}>
+        {props => <ViewMore {...props} />}
       </Stack.Screen>
       <Stack.Screen
         name="Orders"

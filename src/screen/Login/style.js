@@ -19,13 +19,13 @@ export default StyleSheet.create({
   textInput: {
     textAlign: 'left',
     borderWidth: 1,
-    borderColor: 'white',
+    borderColor: 'rgb(240, 240, 240)',
     borderRadius: 8,
     width: '100%',
     padding: 16,
-    backgroundColor: 'white',
+    backgroundColor: 'rgb(240, 240, 240)',
+    opacity: 0.7,
     color: 'black',
-    opacity: 0.4,
     marginTop: 200,
     fontWeight: '600',
     fontSize: 16,
@@ -33,19 +33,21 @@ export default StyleSheet.create({
   textInputPassword: {
     textAlign: 'left',
     borderWidth: 1,
-    borderColor: 'white',
+    borderColor: 'rgb(240, 240, 240)',
     borderRadius: 8,
     width: '100%',
     padding: 16,
-    backgroundColor: 'white',
+    backgroundColor: 'rgb(240, 240, 240)',
     color: 'black',
-    opacity: 0.4,
+    opacity: 0.7,
     marginTop: 18,
+    fontWeight: '600',
   },
   forgotPass: {
     color: 'white',
     marginTop: 10,
     textAlign: 'left',
+    fontFamily: 'Nunito-Regular',
   },
   button: {
     backgroundColor: '#FFCD61',
@@ -57,8 +59,8 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: 'black',
-    fontWeight: 'bold',
     fontSize: 18,
+    fontFamily: 'Nunito-Bold',
   },
   textConfirmation: {
     flexDirection: 'row',
@@ -67,7 +69,7 @@ export default StyleSheet.create({
   },
   textHaveAccount: {
     color: 'white',
-    fontWeight: '300',
+    fontFamily: 'Nunito-Regular',
   },
   textSignUp: {
     color: 'white',

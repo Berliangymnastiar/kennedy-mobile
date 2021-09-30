@@ -40,14 +40,14 @@ function Login({navigation}) {
           style={styles.textInput}
           placeholder="Email"
           keyboardType="email-address"
-          placeholderTextColor="#696868"
+          placeholderTextColor="#000000"
           value={email}
           onChangeText={value => setEmail(value)}
         />
         <TextInput
           style={styles.textInputPassword}
           placeholder="Password"
-          placeholderTextColor={'black'}
+          placeholderTextColor="#000000"
           value={password}
           onChangeText={value => setPassword(value)}
           secureTextEntry
