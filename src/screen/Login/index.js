@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
+import {API_URL} from '@env';
 
 import imageBackground from '../../assets/images/login-image.png';
 import {loginAction} from '../../redux/action/authAction';
@@ -26,7 +27,6 @@ function Login({navigation}) {
     data.append('password', password);
 
     dispatch(loginAction(data, navigation));
-    dispatch(vehicleAction);
   };
   return (
     <>

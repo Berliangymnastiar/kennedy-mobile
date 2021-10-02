@@ -11,7 +11,7 @@ export default StyleSheet.create({
     marginTop: 10,
   },
   payment: {
-    fontWeight: '600',
+    fontFamily: 'Nunito-Bold',
     fontSize: 28,
     marginHorizontal: 24,
   },
@@ -25,7 +25,7 @@ export default StyleSheet.create({
   },
   label: {
     color: '#5C5959',
-    fontWeight: '600',
+    fontFamily: 'Nunito-Bold',
     marginTop: 10,
   },
   textInput: {
@@ -41,7 +41,7 @@ export default StyleSheet.create({
     marginVertical: 10,
     backgroundColor: '#B8B8B8',
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: 'Nunito-Bold',
   },
   button: {
     backgroundColor: '#FFCD61',
@@ -53,7 +53,7 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: 'black',
-    fontWeight: 'bold',
+    fontFamily: 'Nunito-Bold',
     fontSize: 18,
   },
 });

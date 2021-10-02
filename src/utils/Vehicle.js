@@ -19,3 +19,11 @@ export const getVehicleMotorbikes = () => {
 export const getVehicleBikes = () => {
   return axios.get(`${API_URL}/vehicles?filter=bikes`);
 };
+
+export const createVehicle = data => {
+  return axios.post(`${API_URL}/vehicles`, data, {
+    headers: {
+      'content-type': 'multipart/form-data',
+    },
+  });
+};

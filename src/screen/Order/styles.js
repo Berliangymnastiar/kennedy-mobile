@@ -32,31 +32,31 @@ export default StyleSheet.create({
   },
   nameVehicle: {
     fontSize: 28,
-    fontWeight: '600',
+    fontFamily: 'Nunito-Bold',
     color: '#4E4E4E',
   },
   textPerson: {
     fontSize: 16,
     color: '#4E4E4E',
     marginTop: 14,
-    fontWeight: '300',
+    fontFamily: 'Nunito-Regular',
   },
   textPayment: {
     fontSize: 16,
     color: '#4E4E4E',
-    fontWeight: '300',
+    fontFamily: 'Nunito-Regular',
     marginTop: 5,
   },
   textStatusGreen: {
     fontSize: 16,
     color: '#087E0D',
-    fontWeight: '700',
+    fontFamily: 'Nunito-Bold',
     marginTop: 5,
   },
   textStatusRed: {
     fontSize: 16,
     color: '#9B0A0A',
-    fontWeight: '700',
+    fontFamily: 'Nunito-Bold',
     marginTop: 5,
   },
   wrapperLocation: {
@@ -66,14 +66,14 @@ export default StyleSheet.create({
   textStreet: {
     color: '#9A9A9D',
     fontSize: 16,
-    fontWeight: '400',
+    fontFamily: 'Nunit-Regular',
     marginLeft: 13,
     marginTop: 6,
   },
   textAmount: {
     color: '#393939',
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: 'Nunit-Bold',
   },
   button: {
     backgroundColor: '#FFCD61',
@@ -85,11 +85,11 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: 'black',
-    fontWeight: 'bold',
+    fontFamily: 'Nunito-Bold',
     fontSize: 18,
   },
   wrapperSelect: {
-    marginTop: 13,
+    marginTop: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

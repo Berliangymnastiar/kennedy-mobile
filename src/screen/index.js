@@ -13,6 +13,7 @@ import Payment3 from './Payment3';
 import FinishPayment from './FinishPayment';
 import Search from './Search';
 import ViewMore from './ViewMore';
+import AddVehicle from './AddVehicle';
 
 export {
   Login,
@@ -30,4 +31,5 @@ export {
   FinishPayment,
   Search,
   ViewMore,
+  AddVehicle,
 };

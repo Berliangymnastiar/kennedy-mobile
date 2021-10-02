@@ -10,7 +10,6 @@ import {
   Pressable,
 } from 'react-native';
 import styles from './style';
-import dummyImg from '../../assets/images/order-image.png';
 import trashImg from '../../assets/images/icon-trash.png';
 import {useSelector} from 'react-redux';
 
@@ -48,7 +47,7 @@ function History(props) {
                     Max for {vehicle.capacity} person
                   </Text>
                   <Text style={styles.textPrepaid}>
-                    Prepayment : Rp. 245.0000
+                    Prepayment : Rp. {vehicle.price}
                   </Text>
                   <Text style={styles.textGreen}>Paid</Text>
                 </View>

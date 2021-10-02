@@ -2,6 +2,7 @@ import React, {Fragment} from 'react';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {
+  AddVehicle,
   Chat,
   FinishPayment,
   ForgotPassword,
@@ -64,6 +65,11 @@ function HomeStack() {
       <Stack.Screen
         name="Finish-Payment"
         component={FinishPayment}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Add-Vehicle"
+        component={AddVehicle}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
@@ -177,7 +183,6 @@ function MainTabs() {
 
 export default function Router() {
   const token = useSelector(state => state.auth.token);
-  console.log(token);
   return (
     <NavigationContainer>
       <Stack.Navigator>
