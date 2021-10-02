@@ -1,3 +1,4 @@
+import {API_URL} from '@env';
 import React, {useEffect, useState} from 'react';
 import DatePicker from 'react-native-date-picker';
 import RNPickerSelect from 'react-native-picker-select';
@@ -44,7 +45,7 @@ function Orders(props) {
 
   useEffect(() => {
     axios
-      .get(`http://192.168.1.100:8000/vehicles/${id}`, {
+      .get(`${API_URL}/vehicles/${id}`, {
         headers: {
           'x-access-token': `Bearer ${token}`,
         },
@@ -115,7 +116,9 @@ function Orders(props) {
             <Text style={styles.textPerson}>Max for {capacity} person</Text>
             <Text style={styles.textPayment}>No prepayment</Text>
             <Text
-              style={available ? styles.textStatusGreen : styles.textStatusRed}>
+              style={
+                available > 0 ? styles.textStatusGreen : styles.textStatusRed
+              }>
               {available > 0 ? 'Available' : 'Not Available'}
             </Text>
           </View>
@@ -128,7 +131,7 @@ function Orders(props) {
             <Text style={styles.textStreet}>3.2 miles from your location</Text>
           </View>
           <View style={styles.wrapperSelect}>
-            <Text style={styles.textAmount}>Select bikes : </Text>
+            <Text style={styles.textAmount}>Select vehicles : </Text>
             <TouchableOpacity
               onPress={() =>
                 totalVehicle > 1 && setTotalVehicle(totalVehicle - 1)
@@ -160,14 +163,9 @@ function Orders(props) {
               mode="date"
               open={open}
               date={typeof bookingDate === 'object' ? bookingDate : new Date()}
-              // onValueChange={value => {
-              //   setBookingDate(value);
-              //   console.log(setBookingDate(value));
-              // }}
               onConfirm={value => {
                 setOpen(false);
                 setBookingDate(value);
-                console.log(setBookingDate(value));
               }}
               onCancel={() => {
                 setOpen(false);

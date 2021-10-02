@@ -3,6 +3,7 @@ import {
   GET_CARS,
   GET_MOTORBIKES,
   GET_BIKES,
+  ADD_VEHICLES,
 } from './actionString';
 
 const initialState = {
@@ -10,6 +11,7 @@ const initialState = {
   cars: [],
   motorbikes: [],
   bikes: [],
+  message: '',
 };
 
 const vehicleReducer = (state = initialState, action) => {
@@ -33,6 +35,11 @@ const vehicleReducer = (state = initialState, action) => {
       return {
         ...state,
         bikes: action.payload,
+      };
+    case ADD_VEHICLES:
+      return {
+        ...state,
+        message: action.payload,
       };
     default:
       return state;

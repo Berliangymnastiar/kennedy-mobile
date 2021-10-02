@@ -1,3 +1,4 @@
+import {API_URL} from '@env';
 import styles from './style';
 import {connect} from 'react-redux';
 import React, {Component} from 'react';
@@ -18,12 +19,17 @@ import {
   getMotorbikes,
   vehicleAction,
 } from '../../redux/action/vehicleAction';
+import axios from 'axios';
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       vehicleName: '',
+      vehicle: [],
+      cars: [],
+      bikes: [],
+      motorbike: [],
     };
   }
 
@@ -36,31 +42,77 @@ class Home extends Component {
     this.props.navigation.navigate('Search', {query: query});
   };
 
-  getCarsHandler = () => {
-    const query = `?filter=cars`;
-    this.props.navigation.navigate('View-More', {query: query, title: 'Cars'});
-  };
-
-  getMotorbikesHandler = () => {
-    const query = `?filter=motorbike`;
-    this.props.navigation.navigate('View-More', {
-      query: query,
-      title: 'Motorbike',
-    });
-  };
-
-  getBikesHandler = () => {
-    const query = `?filter=bikes`;
-    this.props.navigation.navigate('View-More', {
-      query: query,
-      title: 'Bikes',
-    });
-  };
-
   componentDidMount() {
-    this.props.getByCars();
-    this.props.getByMotorbike();
-    this.props.getByBikes();
+    const getByCategory = filter => {
+      axios
+        .get(`${API_URL}/vehicles`, {
+          params: {filter: filter},
+        })
+        .then(({data}) => {
+          // console.log(data);
+          // console.log(data.result);
+          if (filter === 'motorbike') {
+            this.setState({
+              motorbike: data.result,
+            });
+          }
+          if (filter === 'bikes') {
+            this.setState({
+              bikes: data.result,
+            });
+          }
+          if (filter === 'cars') {
+            this.setState({
+              cars: data.result,
+            });
+          }
+        });
+    };
+
+    getByCategory('motorbike');
+    getByCategory('bikes');
+    getByCategory('cars');
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    const getByCategory = filter => {
+      axios
+        .get(`${API_URL}/vehicles`, {
+          params: {filter: filter},
+        })
+        .then(({data}) => {
+          if (filter === 'motorbike') {
+            if (data.result.length === this.state.motorbike.length) {
+              return false;
+            }
+            this.setState({
+              motorbike: data.result,
+            });
+          }
+          if (filter === 'bikes') {
+            if (data.result.length === this.state.bikes.length) {
+              return false;
+            }
+            this.setState({
+              bikes: data.result,
+            });
+          }
+          if (filter === 'cars') {
+            if (data.result.length === this.state.cars.length) {
+              return false;
+            }
+            this.setState({
+              cars: data.result,
+            });
+          }
+        });
+    };
+
+    getByCategory('cars');
+    getByCategory('bikes');
+    getByCategory('motorbike');
+
+    return true;
   }
 
   render() {
@@ -86,11 +138,13 @@ class Home extends Component {
           />
         </View>
         {this.props.auth.userInfo[0].roles === 'admin' && (
-          <TouchableOpacity style={styles.wrapperButton}>
-            <View style={styles.button}>
+          <View style={styles.wrapperButton}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => this.props.navigation.navigate('Add-Vehicle')}>
               <Text style={styles.buttonText}>Add New Item</Text>
-            </View>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </View>
         )}
         <View style={styles.viewSection}>
           <Text style={styles.textCategory}>Cars</Text>
@@ -104,7 +158,7 @@ class Home extends Component {
           </Pressable>
         </View>
         <ScrollView horizontal={true} style={styles.viewSectionImage}>
-          {this.props.vehicle.cars.map(vehicle => {
+          {this.state.cars.map(vehicle => {
             return (
               <Pressable
                 key={vehicle.id}
@@ -130,7 +184,7 @@ class Home extends Component {
           </Pressable>
         </View>
         <ScrollView horizontal={true} style={styles.viewSectionImage}>
-          {this.props.vehicle.motorbikes.map(vehicle => {
+          {this.state.motorbike.map(vehicle => {
             return (
               <Pressable
                 key={vehicle.id}
@@ -156,7 +210,7 @@ class Home extends Component {
           </Pressable>
         </View>
         <ScrollView horizontal={true} style={styles.viewSectionImage}>
-          {this.props.vehicle.bikes.map(vehicle => {
+          {this.state.bikes.map(vehicle => {
             return (
               <Pressable
                 key={vehicle.id}
@@ -198,3 +252,24 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
+
+// getCarsHandler = () => {
+//   const query = `?filter=cars`;
+//   this.props.navigation.navigate('View-More', {query: query, title: 'Cars'});
+// };
+
+// getMotorbikesHandler = () => {
+//   const query = `?filter=motorbike`;
+//   this.props.navigation.navigate('View-More', {
+//     query: query,
+//     title: 'Motorbike',
+//   });
+// };
+
+// getBikesHandler = () => {
+//   const query = `?filter=bikes`;
+//   this.props.navigation.navigate('View-More', {
+//     query: query,
+//     title: 'Bikes',
+//   });
+// };

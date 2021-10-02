@@ -11,7 +11,7 @@ export default StyleSheet.create({
     marginTop: 10,
   },
   payment: {
-    fontWeight: '600',
+    fontFamily: 'Nunito-Bold',
     fontSize: 28,
     marginHorizontal: 24,
   },
@@ -26,34 +26,37 @@ export default StyleSheet.create({
   },
   paymentCode: {
     fontSize: 18,
-    fontWeight: '600',
+    fontFamily: 'Nunito-Bold',
   },
   textPaymentCode: {
     marginVertical: 9,
     fontSize: 36,
-    fontWeight: '600',
+    fontFamily: 'Nunito-Bold',
   },
   payBefore: {
     textAlign: 'center',
     alignItems: 'center',
     fontSize: 13,
     color: '#616167',
+    fontFamily: 'Nunito-Regular',
   },
   textTimer: {
     fontSize: 24,
     fontWeight: '700',
     color: '#9B0A0A',
     marginTop: 15,
+    fontFamily: 'Nunito-Bold',
   },
   bankInformation: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: 'Nunito-Bold',
     color: '#616167',
     marginTop: 10,
   },
   textNumberBank: {
     fontWeight: '700',
     fontSize: 24,
+    fontFamily: 'Nunito-Bold',
     marginTop: 10,
   },
   borderBottom: {
@@ -83,6 +86,7 @@ export default StyleSheet.create({
     fontSize: 16,
     color: '#616167',
     marginTop: 8,
+    fontFamily: 'Nunito-Regular',
   },
   wrapperCopyPayment: {
     alignItems: 'center',
@@ -97,7 +101,7 @@ export default StyleSheet.create({
   },
   buttonCopyPayment: {
     color: 'black',
-    fontWeight: 'bold',
+    fontFamily: 'Nunito-Bold',
     fontSize: 12,
   },
   wrapperPrice: {
@@ -119,7 +123,7 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: 'black',
-    fontWeight: 'bold',
+    fontFamily: 'Nunito-Bold',
     fontSize: 18,
   },
 });

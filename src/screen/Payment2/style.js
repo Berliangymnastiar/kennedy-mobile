@@ -11,7 +11,7 @@ export default StyleSheet.create({
     marginTop: 10,
   },
   payment: {
-    fontWeight: '600',
+    fontFamily: 'Nunito-Bold',
     fontSize: 28,
     marginHorizontal: 24,
   },
@@ -36,6 +36,7 @@ export default StyleSheet.create({
     fontSize: 16,
     color: '#949499',
     marginVertical: 5,
+    fontFamily: 'Nunito-Regular',
   },
   borderBottom: {
     borderBottomWidth: 1,
@@ -48,7 +49,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
   },
   textPrice: {
-    fontWeight: '600',
+    fontFamily: 'Nunito-Bold',
     fontSize: 26,
   },
   button: {
@@ -61,7 +62,7 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: 'black',
-    fontWeight: 'bold',
+    fontFamily: 'Nunito-Bold',
     fontSize: 18,
   },
 });

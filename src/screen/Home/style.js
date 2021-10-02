@@ -18,7 +18,7 @@ export default StyleSheet.create({
     bottom: 230,
   },
   wrapperButton: {
-    marginTop: -100,
+    marginTop: -90,
   },
   button: {
     backgroundColor: '#FFCD61',

@@ -11,13 +11,13 @@ export default StyleSheet.create({
     marginTop: 10,
   },
   payment: {
-    fontWeight: '600',
+    fontFamily: 'Nunito-Bold',
     fontSize: 28,
     marginHorizontal: 24,
   },
   paymentSuccess: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontFamily: 'Nunito-Bold',
     color: '#087E0D',
   },
   wrapperIconPayment: {
@@ -39,6 +39,7 @@ export default StyleSheet.create({
     fontSize: 16,
     color: '#949499',
     marginVertical: 5,
+    fontFamily: 'Nunito-Regular',
   },
   borderBottom: {
     borderBottomWidth: 0.3,
@@ -47,7 +48,7 @@ export default StyleSheet.create({
   },
   active: {
     color: '#087E0D',
-    fontWeight: 'bold',
+    fontFamily: 'Nunito-Bold',
   },
   wrapperPrice: {
     flexDirection: 'row',
@@ -64,7 +65,7 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: 'black',
-    fontWeight: 'bold',
+    fontFamily: 'Nunito-Bold',
     fontSize: 18,
   },
 });
