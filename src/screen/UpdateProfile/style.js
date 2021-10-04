@@ -23,6 +23,7 @@ export default StyleSheet.create({
     height: 100,
     width: 100,
     justifyContent: 'center',
+    borderRadius: 100,
   },
   wrapperCheckbox: {
     flexDirection: 'row',

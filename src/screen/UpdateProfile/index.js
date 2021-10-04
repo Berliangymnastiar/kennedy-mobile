@@ -1,4 +1,9 @@
+import axios from 'axios';
+import {API_URL} from '@env';
+import ImagePicker from 'react-native-image-crop-picker';
 import React, {useEffect, useState} from 'react';
+import CheckBox from '@react-native-community/checkbox';
+import {useSelector} from 'react-redux';
 import {
   View,
   Text,
@@ -8,13 +13,11 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
 import styles from './style';
 import Icon from 'react-native-vector-icons/Ionicons';
 import defaultPhoto from '../../assets/images/default-photo.png';
-import CheckBox from '@react-native-community/checkbox';
-import {useSelector} from 'react-redux';
-import axios from 'axios';
 
 function UpdateProfile({navigation}) {
   const token = useSelector(state => state.auth.token);
@@ -23,14 +26,14 @@ function UpdateProfile({navigation}) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState('');
-  const [image, setImage] = useState('');
-  const [imgPreview, setImagePreview] = useState(null);
+  const [image, setImage] = useState(null);
+  const [prevImg, setPrevImg] = useState(null);
   const [address, setAdress] = useState(null);
   const [phonenumber, setPhoneNumber] = useState(null);
 
   useEffect(() => {
     axios
-      .get(`http://192.168.1.100:8000/users/${id}`, {
+      .get(`${API_URL}/users/${id}`, {
         headers: {
           'x-access-token': `Bearer ${token}`,
         },
@@ -42,32 +45,78 @@ function UpdateProfile({navigation}) {
         setEmail(data.email);
         setAdress(data.address);
         setPhoneNumber(data.phonenumber);
-        setImage(data.picture);
+        setPrevImg(data.picture);
       })
       .catch(err => console.log(err));
   }, []);
 
   const onSubmit = () => {
+    if (name === '') {
+      return ToastAndroid.show(
+        'Please input your name for update profile',
+        ToastAndroid.SHORT,
+      );
+    } else if (email === '') {
+      return ToastAndroid.show(
+        'Please input yout email for update profile',
+        ToastAndroid.SHORT,
+      );
+    } else if (address === '') {
+      return ToastAndroid.show(
+        'Please input your address for update profile',
+        ToastAndroid.SHORT,
+      );
+    } else if (phonenumber === '') {
+      return ToastAndroid.show(
+        'Please input your phonenumber for update profile',
+        ToastAndroid.SHORT,
+      );
+    }
+
     const data = new FormData();
     data.append('name', name);
     data.append('email', email);
     data.append('address', address);
     data.append('phonenumber', phonenumber);
+    if (image !== null && image !== undefined && image !== '') {
+      data.append('picture', {
+        name: new Date() + 'picture' + image.path,
+        uri: image.path,
+        type: image.mime,
+      });
+    }
 
     axios
-      .patch(`http://192.168.1.100:8000/users/${id}`, data, {
+      .patch(`${API_URL}/users/${id}`, data, {
         headers: {
           'x-access-token': `Bearer ${token}`,
         },
       })
       .then(res => {
         if (res) {
-          console.log('success update');
-          console.log(gender);
+          return ToastAndroid.show(
+            'Update profile success',
+            ToastAndroid.SHORT,
+          );
         }
+        console.log(res);
       })
       .catch(err => console.log(err));
   };
+
+  const choosePhotoFromLibrary = () => {
+    ImagePicker.openPicker({
+      width: 500,
+      height: 600,
+      cropping: true,
+    }).then(image => {
+      setImage(image);
+    });
+  };
+
+  const sourceUri = image?.path
+    ? {uri: image?.path}
+    : {uri: `${API_URL}` + prevImg};
 
   return (
     <SafeAreaView style={styles.container}>
@@ -78,9 +127,9 @@ function UpdateProfile({navigation}) {
           <Icon name="arrow-back" size={26}></Icon>
           <Text style={styles.updateProfile}>Update Profile</Text>
         </Pressable>
-        <Pressable style={styles.wrapperPhoto}>
+        <Pressable style={styles.wrapperPhoto} onPress={choosePhotoFromLibrary}>
           <Image
-            source={{uri: `http://192.168.1.100:8000` + image}}
+            source={sourceUri ? sourceUri : defaultPhoto}
             style={styles.photoUser}
           />
         </Pressable>
