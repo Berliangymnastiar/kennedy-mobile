@@ -25,7 +25,7 @@ function Payment3(props) {
   const paymentMethod = props.route.params.paymentMethod;
   const bookingDuration = props.route.params.bookingDuration;
   const totalPrice = props.route.params.totalPrice;
-  const updateStatusPayment = 'WAITING APPROVE';
+  const updateStatusPayment = 'Payment Success';
 
   const onFinishPayment = () => {
     const data = new URLSearchParams();
@@ -33,7 +33,7 @@ function Payment3(props) {
     axios
       .patch(`${API_URL}/transactions/${id}`, data)
       .then(result => {
-        console.log(result);
+        // console.log(result);
         props.navigation.push('Finish-Payment', {
           id: id,
           paymentMethod: paymentMethod,

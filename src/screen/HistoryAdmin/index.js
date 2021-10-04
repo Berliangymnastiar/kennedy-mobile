@@ -1,6 +1,7 @@
-import axios from 'axios';
-import {API_URL} from '@env';
 import React, {useEffect, useState} from 'react';
+import {API_URL} from '@env';
+import axios from 'axios';
+import styles from './style';
 import {
   View,
   Text,
@@ -8,32 +9,29 @@ import {
   ScrollView,
   Image,
   Pressable,
+  TouchableOpacity,
 } from 'react-native';
-import styles from './style';
 import trashImg from '../../assets/images/icon-trash.png';
-import {useSelector} from 'react-redux';
+// import {useSelector} from 'react-redux';
 
-function History(props) {
-  const userId = useSelector(state => state.auth.userInfo[0].id);
+const HistoryAdmin = () => {
+  // const userId = useSelector(state => state.auth.userInfo[0].id);
   const [vehicle, setVehicle] = useState([]);
 
   useEffect(() => {
-    const getHistory = props.navigation.addListener('focus', () => {
-      axios
-        .get(`${API_URL}/transactions/history/${userId}`)
-        .then(({data}) => {
-          setVehicle(data.result);
-          console.log(data);
-        })
-        .catch(error => console.log(error));
-    });
-  }, [props.navigation]);
-
+    axios
+      .get(`${API_URL}/transactions`)
+      .then(({data}) => {
+        setVehicle(data.result);
+        console.log(data);
+      })
+      .catch(error => console.log(error));
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.wrapperHistoryOrder}>
-          <Text style={styles.historyOrder}>History Order</Text>
+          <Text style={styles.historyOrder}>History Order Admin</Text>
         </View>
         <View style={styles.wrapperData}>
           {vehicle.map(vehicle => {
@@ -51,7 +49,7 @@ function History(props) {
                   <Text style={styles.textPrepaid}>
                     Prepayment : Rp. {vehicle.price}
                   </Text>
-                  <Text style={styles.textGreen}>Paid</Text>
+                  <Text style={styles.textGreen}>{vehicle.status_payment}</Text>
                 </View>
                 <Pressable>
                   <Image source={trashImg} style={styles.trashImg} />
@@ -63,5 +61,6 @@ function History(props) {
       </ScrollView>
     </SafeAreaView>
   );
-}
-export default History;
+};
+
+export default HistoryAdmin;

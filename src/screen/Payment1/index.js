@@ -16,7 +16,6 @@ import iconPayment from '../../assets/images/icon-payment1.png';
 import axios from 'axios';
 
 function Payment1(props) {
-  console.log(props);
   const [name, setName] = useState('');
   const [idCard, setIdCard] = useState('');
   const [phonenumber, setPhoneNumber] = useState('');
