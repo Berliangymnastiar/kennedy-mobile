@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import LogoutModal from '../../component/Modal';
 import AppStatusBar from '../../component/AppStatusBar';
 import styles from './style';
 
@@ -16,6 +17,11 @@ import {logoutAction} from '../../redux/action/authAction';
 
 function Profile({navigation}) {
   const dispatch = useDispatch();
+  const [modalVisible, setModalVisible] = useState(false);
+  const LogoutHandler = () => {
+    dispatch(logoutAction(navigation));
+  };
+
   return (
     <SafeAreaView style={styles.wrapperProfile}>
       <AppStatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
@@ -45,13 +51,24 @@ function Profile({navigation}) {
           <Icon name="arrow-forward" size={20} />
         </Pressable>
       </View>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.wrapperButton}
         onPress={() => dispatch(logoutAction(navigation))}>
         <View style={styles.button}>
           <Text style={styles.buttonText}>Logout</Text>
         </View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
+      <LogoutModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        buttonStyle={styles.logoutBtn}
+        nextHandler={LogoutHandler}
+        buttonText="Log out"
+        leftButtonText="Yes, Log me out"
+        rightButtonText="Cancel"
+        titleText="Are you sure you want to log out?"
+        leftButtonColor="#b02a37"
+      />
     </SafeAreaView>
   );
 }

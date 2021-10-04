@@ -36,4 +36,13 @@ export default StyleSheet.create({
     flex: 2,
     justifyContent: 'flex-end',
   },
+  logoutBtn: {
+    width: 'auto',
+    height: 50,
+    margin: 16,
+    justifyContent: 'center',
+    backgroundColor: '#FFCD61',
+    alignItems: 'center',
+    borderRadius: 10,
+  },
 });

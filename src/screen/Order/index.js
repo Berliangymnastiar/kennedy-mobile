@@ -18,7 +18,11 @@ import {useSelector} from 'react-redux';
 import axios from 'axios';
 
 function Orders(props) {
-  // console.log(props.navigation.navigate);
+  const token = useSelector(state => state.auth.token);
+  const isAdmin = useSelector(state => state.auth.userInfo[0].roles);
+  const id = props.route.params.id;
+  const userId = useSelector(state => state.auth.userInfo[0].id);
+
   const date = new Date();
   const formatedDate =
     date.getFullYear() +
@@ -38,9 +42,6 @@ function Orders(props) {
   const [bookingDuration, setBookingDuration] = useState('1 day');
   const [open, setOpen] = useState(false);
 
-  const token = useSelector(state => state.auth.token);
-  const id = props.route.params.id;
-  const userId = useSelector(state => state.auth.userInfo[0].id);
   const totalPrice = price * totalVehicle;
 
   useEffect(() => {
@@ -131,7 +132,9 @@ function Orders(props) {
             <Text style={styles.textStreet}>3.2 miles from your location</Text>
           </View>
           <View style={styles.wrapperSelect}>
-            <Text style={styles.textAmount}>Select vehicles : </Text>
+            <Text style={styles.textAmount}>
+              {isAdmin === 'admin' ? 'stock :' : 'Select vehicles :'}
+            </Text>
             <TouchableOpacity
               onPress={() =>
                 totalVehicle > 1 && setTotalVehicle(totalVehicle - 1)
@@ -150,52 +153,71 @@ function Orders(props) {
               </View>
             </TouchableOpacity>
           </View>
-          <View style={styles.picker}>
-            <Pressable style={styles.date} onPress={() => setOpen(true)}>
-              <Text>
-                {typeof bookingDate === 'object'
-                  ? bookingDate.toDateString()
-                  : bookingDate}
-              </Text>
-            </Pressable>
-            <DatePicker
-              modal
-              mode="date"
-              open={open}
-              date={typeof bookingDate === 'object' ? bookingDate : new Date()}
-              onConfirm={value => {
-                setOpen(false);
-                setBookingDate(value);
-              }}
-              onCancel={() => {
-                setOpen(false);
-              }}
-            />
-          </View>
-          <RNPickerSelect
-            placeholder={{}}
-            onValueChange={value => setBookingDuration(value)}
-            items={[
-              {label: '1 Day', value: '1 day'},
-              {label: '2 Days', value: '2 day'},
-              {label: '3 Days', value: '3 day'},
-              {label: '4 Days', value: '4 day'},
-            ]}
-          />
-          <TouchableOpacity
-            onPress={() => {
-              if (typeof bookingDate === 'string') {
-                return ToastAndroid.show(
-                  'Please select date for booking',
-                  ToastAndroid.SHORT,
-                );
-              }
-              createTransaction();
-            }}>
-            <View style={styles.buttonReservation}>
-              <Text style={styles.buttonText}>Reservation</Text>
-            </View>
-          </TouchableOpacity>
+          {isAdmin !== 'admin' && (
+            <>
+              <View style={styles.picker}>
+                <Pressable style={styles.date} onPress={() => setOpen(true)}>
+                  <Text>
+                    {typeof bookingDate === 'object'
+                      ? bookingDate.toDateString()
+                      : bookingDate}
+                  </Text>
+                </Pressable>
+                <DatePicker
+                  modal
+                  mode="date"
+                  open={open}
+                  date={
+                    typeof bookingDate === 'object' ? bookingDate : new Date()
+                  }
+                  onConfirm={value => {
+                    setOpen(false);
+                    setBookingDate(value);
+                  }}
+                  onCancel={() => {
+                    setOpen(false);
+                  }}
+                />
+              </View>
+              <RNPickerSelect
+                placeholder={{}}
+                onValueChange={value => setBookingDuration(value)}
+                items={[
+                  {label: '1 Day', value: '1 day'},
+                  {label: '2 Days', value: '2 day'},
+                  {label: '3 Days', value: '3 day'},
+                  {label: '4 Days', value: '4 day'},
+                ]}
+              />
+            </>
+          )}
+          {isAdmin === 'admin' ? (
+            <TouchableOpacity
+              onPress={() => {
+                props.navigation.navigate('Edit-Vehicle', {
+                  id: id,
+                });
+              }}>
+              <View style={styles.buttonReservation}>
+                <Text style={styles.buttonText}>Edit Item</Text>
+              </View>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              onPress={() => {
+                if (typeof bookingDate === 'string') {
+                  return ToastAndroid.show(
+                    'Please select date for booking',
+                    ToastAndroid.SHORT,
+                  );
+                }
+                createTransaction();
+              }}>
+              <View style={styles.buttonReservation}>
+                <Text style={styles.buttonText}>Reservation</Text>
+              </View>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </ScrollView>

@@ -19,6 +19,14 @@ function Register({navigation}) {
   const [password, setPassword] = useState('');
 
   const onSubmit = () => {
+    if (email === '') {
+      return ToastAndroid.show('Email must be field', ToastAndroid.SHORT);
+    } else if (name === '') {
+      return ToastAndroid.show('Username must be field', ToastAndroid.SHORT);
+    } else if (password === '') {
+      return ToastAndroid.show('Password must be field', ToastAndroid.SHORT);
+    }
+
     const data = new URLSearchParams();
     data.append('email', email);
     data.append('name', name);

@@ -27,3 +27,11 @@ export const createVehicle = data => {
     },
   });
 };
+
+export const updateVehicle = (data, id) => {
+  return axios.patch(`${API_URL}/vehicles/${id}`, data, {
+    headers: {
+      'content-type': 'multipart/form-data',
+    },
+  });
+};

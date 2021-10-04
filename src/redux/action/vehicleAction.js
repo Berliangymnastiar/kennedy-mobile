@@ -5,6 +5,7 @@ import {
   getVehicleCars,
   getVehicleMotorbikes,
   getVehicles,
+  updateVehicle,
 } from '../../utils/Vehicle';
 import {
   ADD_VEHICLES,
@@ -12,6 +13,7 @@ import {
   GET_CARS,
   GET_MOTORBIKES,
   GET_VEHICLES,
+  UPDATE_VEHICLE,
 } from '../reducer/actionString';
 
 export const vehicleAction = body => {
@@ -80,6 +82,21 @@ export const addVehicles = (data, props) => {
       });
       props.navigation.navigate('Home');
       return ToastAndroid.show('Add vehicle success!', ToastAndroid.SHORT);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const editVehicle = (data, id, props) => {
+  return async dispatch => {
+    try {
+      const response = await updateVehicle(data, id);
+      dispatch({
+        type: UPDATE_VEHICLE,
+        action: response.data.result,
+      });
+      return ToastAndroid.show('Update vehicle success!', ToastAndroid.SHORT);
     } catch (error) {
       console.log(error);
     }
