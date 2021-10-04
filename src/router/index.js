@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {
@@ -19,6 +19,7 @@ import {
   Search,
   UpdateProfile,
   ViewMore,
+  HistoryAdmin,
 } from '../screen';
 import {NavigationContainer} from '@react-navigation/native';
 import defaultPhoto from '../assets/images/default-photo.png';
@@ -142,6 +143,7 @@ function AuthStack() {
 }
 
 function MainTabs() {
+  const isAdmin = useSelector(state => state.auth.userInfo[0].roles);
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -155,14 +157,29 @@ function MainTabs() {
           tabBarIcon: ({color}) => <Icon name="home" color={color} size={26} />,
         }}
       />
-      <Tab.Screen
-        name="History"
-        component={History}
-        options={{
-          tabBarLabel: 'History',
-          tabBarIcon: ({color}) => <Icon name="copy" color={color} size={26} />,
-        }}
-      />
+      {isAdmin === 'admin' ? (
+        <Tab.Screen
+          name="History-Admin"
+          component={HistoryAdmin}
+          options={{
+            tabBarLabel: 'History',
+            tabBarIcon: ({color}) => (
+              <Icon name="copy" color={color} size={26} />
+            ),
+          }}
+        />
+      ) : (
+        <Tab.Screen
+          name="History"
+          component={History}
+          options={{
+            tabBarLabel: 'History',
+            tabBarIcon: ({color}) => (
+              <Icon name="copy" color={color} size={26} />
+            ),
+          }}
+        />
+      )}
       <Tab.Screen
         name="Chat"
         component={Chat}

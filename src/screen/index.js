@@ -15,6 +15,7 @@ import Search from './Search';
 import ViewMore from './ViewMore';
 import AddVehicle from './AddVehicle';
 import EditVehicle from './EditVehicle';
+import HistoryAdmin from './HistoryAdmin';
 
 export {
   Login,
@@ -30,6 +31,7 @@ export {
   Payment2,
   Payment3,
   FinishPayment,
+  HistoryAdmin,
   Search,
   ViewMore,
   AddVehicle,

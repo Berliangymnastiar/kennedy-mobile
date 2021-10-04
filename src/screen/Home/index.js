@@ -1,4 +1,3 @@
-import {API_URL} from '@env';
 import styles from './style';
 import {connect} from 'react-redux';
 import React, {Component} from 'react';
@@ -19,7 +18,6 @@ import {
   getMotorbikes,
   vehicleAction,
 } from '../../redux/action/vehicleAction';
-import axios from 'axios';
 
 class Home extends Component {
   constructor(props) {
@@ -42,77 +40,34 @@ class Home extends Component {
     this.props.navigation.navigate('Search', {query: query});
   };
 
-  componentDidMount() {
-    const getByCategory = filter => {
-      axios
-        .get(`${API_URL}/vehicles`, {
-          params: {filter: filter},
-        })
-        .then(({data}) => {
-          // console.log(data);
-          // console.log(data.result);
-          if (filter === 'motorbike') {
-            this.setState({
-              motorbike: data.result,
-            });
-          }
-          if (filter === 'bikes') {
-            this.setState({
-              bikes: data.result,
-            });
-          }
-          if (filter === 'cars') {
-            this.setState({
-              cars: data.result,
-            });
-          }
-        });
-    };
+  getCarsHandler = () => {
+    const query = '?filter=cars';
+    this.props.navigation.navigate('View-More', {query: query, title: 'Cars'});
+  };
 
-    getByCategory('motorbike');
-    getByCategory('bikes');
-    getByCategory('cars');
+  getMotorbikesHandler = () => {
+    const query = '?filter=motorbike';
+    this.props.navigation.navigate('View-More', {
+      query: query,
+      title: 'Motorbike',
+    });
+  };
+
+  getBikesHandler = () => {
+    const query = '?filter=bikes';
+    this.props.navigation.navigate('View-More', {query: query, title: 'Bike'});
+  };
+
+  componentDidMount() {
+    this.getByCategory = this.props.navigation.addListener('focus', () => {
+      this.props.getByCars();
+      this.props.getByMotorbike();
+      this.props.getByBikes();
+    });
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    const getByCategory = filter => {
-      axios
-        .get(`${API_URL}/vehicles`, {
-          params: {filter: filter},
-        })
-        .then(({data}) => {
-          if (filter === 'motorbike') {
-            if (data.result.length === this.state.motorbike.length) {
-              return false;
-            }
-            this.setState({
-              motorbike: data.result,
-            });
-          }
-          if (filter === 'bikes') {
-            if (data.result.length === this.state.bikes.length) {
-              return false;
-            }
-            this.setState({
-              bikes: data.result,
-            });
-          }
-          if (filter === 'cars') {
-            if (data.result.length === this.state.cars.length) {
-              return false;
-            }
-            this.setState({
-              cars: data.result,
-            });
-          }
-        });
-    };
-
-    getByCategory('cars');
-    getByCategory('bikes');
-    getByCategory('motorbike');
-
-    return true;
+  componentWillUnmount() {
+    this.getByCategory();
   }
 
   render() {
@@ -158,7 +113,7 @@ class Home extends Component {
           </Pressable>
         </View>
         <ScrollView horizontal={true} style={styles.viewSectionImage}>
-          {this.state.cars.map(vehicle => {
+          {this.props.vehicle.cars.map(vehicle => {
             return (
               <Pressable
                 key={vehicle.id}
@@ -184,7 +139,7 @@ class Home extends Component {
           </Pressable>
         </View>
         <ScrollView horizontal={true} style={styles.viewSectionImage}>
-          {this.state.motorbike.map(vehicle => {
+          {this.props.vehicle.motorbikes.map(vehicle => {
             return (
               <Pressable
                 key={vehicle.id}
@@ -210,7 +165,7 @@ class Home extends Component {
           </Pressable>
         </View>
         <ScrollView horizontal={true} style={styles.viewSectionImage}>
-          {this.state.bikes.map(vehicle => {
+          {this.props.vehicle.bikes.map(vehicle => {
             return (
               <Pressable
                 key={vehicle.id}
