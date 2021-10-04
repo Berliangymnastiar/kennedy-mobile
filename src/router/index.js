@@ -4,6 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {
   AddVehicle,
   Chat,
+  EditVehicle,
   FinishPayment,
   ForgotPassword,
   History,
@@ -70,6 +71,11 @@ function HomeStack() {
       <Stack.Screen
         name="Add-Vehicle"
         component={AddVehicle}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Edit-Vehicle"
+        component={EditVehicle}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

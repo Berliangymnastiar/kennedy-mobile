@@ -1,5 +1,3 @@
-import axios from 'axios';
-import {API_URL} from '@env';
 import React, {useState} from 'react';
 import ImagePicker from 'react-native-image-crop-picker';
 import {
@@ -16,13 +14,8 @@ import {
 import RNPickerSelect from 'react-native-picker-select';
 import styles from './style';
 import Icon from 'react-native-vector-icons/Ionicons';
-import iconCamera from '../../assets/images/icon-camera.png';
 import {connect, useDispatch} from 'react-redux';
-import {
-  addVehicles,
-  addVehiclesAction,
-  vehicleAction,
-} from '../../redux/action/vehicleAction';
+import {addVehicles} from '../../redux/action/vehicleAction';
 
 const AddVehicle = props => {
   const [name, setName] = useState('');
@@ -55,8 +48,6 @@ const AddVehicle = props => {
       setImage(image);
     });
   };
-
-  // console.log(image.mime);
 
   const sourceUri = image.path
     ? {uri: image.path}
@@ -104,17 +95,6 @@ const AddVehicle = props => {
     });
 
     dispatch(addVehicles(data, props));
-    // axios
-    //   .post(`${API_URL}/vehicles`, data, {
-    //     headers: {
-    //       'content-type': 'multipart/form-data',
-    //     },
-    //   })
-    //   .then(result => {
-    //     props.navigation.navigate('Home', {name: name});
-    //     console.log(result);
-    //   })
-    //   .catch(err => console.log(err));
   };
 
   return (

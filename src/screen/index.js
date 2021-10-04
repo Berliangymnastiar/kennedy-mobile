@@ -14,6 +14,7 @@ import FinishPayment from './FinishPayment';
 import Search from './Search';
 import ViewMore from './ViewMore';
 import AddVehicle from './AddVehicle';
+import EditVehicle from './EditVehicle';
 
 export {
   Login,
@@ -32,4 +33,5 @@ export {
   Search,
   ViewMore,
   AddVehicle,
+  EditVehicle,
 };

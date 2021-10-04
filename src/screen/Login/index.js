@@ -4,6 +4,7 @@ import {
   ImageBackground,
   Text,
   TextInput,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -22,6 +23,12 @@ function Login({navigation}) {
   const dispatch = useDispatch();
 
   const onSubmit = () => {
+    if (email === '') {
+      return ToastAndroid.show('Email must be field', ToastAndroid.SHORT);
+    } else if (password === '') {
+      return ToastAndroid.show('Password must be field', ToastAndroid.SHORT);
+    }
+
     const data = new URLSearchParams();
     data.append('email', email);
     data.append('password', password);
