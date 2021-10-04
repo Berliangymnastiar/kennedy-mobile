@@ -1,5 +1,7 @@
+import React from 'react';
 import axios from 'axios';
-import React, {useState} from 'react';
+import {API_URL} from '@env';
+import {notification} from '../../component/Notification';
 import {
   View,
   Text,
@@ -29,13 +31,20 @@ function Payment3(props) {
     const data = new URLSearchParams();
     data.append('status_payment', updateStatusPayment);
     axios
-      .patch(`http://192.168.1.100:8000/transactions/${id}`, data)
+      .patch(`${API_URL}/transactions/${id}`, data)
       .then(result => {
         console.log(result);
         props.navigation.push('Finish-Payment', {
           id: id,
           paymentMethod: paymentMethod,
         });
+        notification.configure();
+        notification.createChannel('1');
+        notification.sendNotification(
+          '1',
+          'Payment success',
+          'Your payment success, check in history for details',
+        );
         return ToastAndroid.show('Payment Success!', ToastAndroid.SHORT);
       })
       .catch(err => console.log(err));
