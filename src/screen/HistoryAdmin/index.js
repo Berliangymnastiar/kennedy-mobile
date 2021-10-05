@@ -2,20 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {API_URL} from '@env';
 import axios from 'axios';
 import styles from './style';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  ScrollView,
-  Image,
-  Pressable,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, SafeAreaView, ScrollView, Image} from 'react-native';
+import LogoutModal from '../../component/Modal';
 import trashImg from '../../assets/images/icon-trash.png';
 // import {useSelector} from 'react-redux';
 
-const HistoryAdmin = () => {
-  // const userId = useSelector(state => state.auth.userInfo[0].id);
+const HistoryAdmin = props => {
+  const [modalVisible, setModalVisible] = useState(false);
   const [vehicle, setVehicle] = useState([]);
 
   useEffect(() => {
@@ -23,10 +16,13 @@ const HistoryAdmin = () => {
       .get(`${API_URL}/transactions`)
       .then(({data}) => {
         setVehicle(data.result);
-        console.log(data);
       })
       .catch(error => console.log(error));
   }, []);
+
+  const deleteHistory = id => {
+    console.log(id);
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -51,9 +47,18 @@ const HistoryAdmin = () => {
                   </Text>
                   <Text style={styles.textGreen}>{vehicle.status_payment}</Text>
                 </View>
-                <Pressable>
-                  <Image source={trashImg} style={styles.trashImg} />
-                </Pressable>
+                <LogoutModal
+                  setModalVisible={setModalVisible}
+                  modalVisible={modalVisible}
+                  buttonStyle={styles.logoutBtn}
+                  nextHandler={deleteHistory}
+                  buttonText="Delete"
+                  leftButtonText="Yes"
+                  rightButtonText="Cancel"
+                  leftButtonColor="#FFCD61"
+                  rightButtonColor="#393939"
+                  titleText="Are you sure want to delete this history"
+                />
               </View>
             );
           })}
