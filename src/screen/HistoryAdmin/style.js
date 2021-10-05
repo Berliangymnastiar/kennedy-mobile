@@ -79,4 +79,14 @@ export default StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Nunito-Bold',
   },
+  logoutBtn: {
+    width: 'auto',
+    height: 40,
+    margin: 16,
+    padding: 4,
+    justifyContent: 'center',
+    backgroundColor: '#FFCD61',
+    alignItems: 'center',
+    borderRadius: 10,
+  },
 });

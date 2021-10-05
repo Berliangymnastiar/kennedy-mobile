@@ -2,16 +2,16 @@ import React from 'react';
 import {View, Text, StyleSheet, Pressable, Modal} from 'react-native';
 
 const ModalComponent = ({
-  setModalVisible,
   modalVisible,
-  buttonStyle,
+  setModalVisible,
   nextHandler,
-  buttonText,
+  buttonStyle,
   leftButtonText,
   rightButtonText,
-  titleText,
+  buttonText,
   leftButtonColor,
   rightButtonColor,
+  titleText,
 }) => {
   return (
     <>
@@ -27,27 +27,17 @@ const ModalComponent = ({
             <Text style={styles.modalText}>{titleText}</Text>
             <View style={styles.flexRow}>
               <Pressable
-                style={[
-                  styles.button,
-                  {backgroundColor: leftButtonColor || '#2196F3'},
-                ]}
+                style={[styles.button, {backgroundColor: leftButtonColor}]}
                 onPress={() => {
                   setModalVisible(!modalVisible);
                   nextHandler();
                 }}>
-                <Text style={styles.textStyle}>
-                  {leftButtonText || 'Left Button'}
-                </Text>
+                <Text style={styles.textStyle}>{leftButtonText}</Text>
               </Pressable>
               <Pressable
-                style={[
-                  styles.button,
-                  {backgroundColor: rightButtonColor || '#2196F3'},
-                ]}
+                style={[styles.button, {backgroundColor: rightButtonColor}]}
                 onPress={() => setModalVisible(!modalVisible)}>
-                <Text style={styles.textStyle}>
-                  {rightButtonText || 'Right Button'}
-                </Text>
+                <Text style={styles.textStyleBtnCancel}>{rightButtonText}</Text>
               </Pressable>
             </View>
           </View>
@@ -58,7 +48,7 @@ const ModalComponent = ({
           setModalVisible(true);
         }}
         style={buttonStyle}>
-        <Text style={styles.logoutBtnTxt}>{buttonText || 'Button'}</Text>
+        <Text style={styles.logoutBtnTxt}>{buttonText}</Text>
       </Pressable>
     </>
   );
@@ -74,6 +64,7 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+    fontFamily: 'Nunito-Bold',
   },
   modalView: {
     margin: 20,
@@ -98,12 +89,17 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   textStyle: {
+    color: 'black',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  textStyleBtnCancel: {
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
   },
   flexRow: {flexDirection: 'row'},
-  logoutBtnTxt: {fontSize: 20, fontWeight: '700'},
+  logoutBtnTxt: {fontSize: 14, fontFamily: 'Nunito-Bold'},
 });
 
 export default ModalComponent;
