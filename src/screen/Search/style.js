@@ -14,6 +14,9 @@ export default StyleSheet.create({
     marginHorizontal: 20,
     bottom: 230,
   },
+  wrapperInput: {
+    marginBottom: 50,
+  },
   searchIcon: {
     position: 'absolute',
     right: 20,
@@ -34,7 +37,7 @@ export default StyleSheet.create({
   },
   wrapperFilter: {
     flexDirection: 'row',
-    marginTop: 80,
+    marginTop: 20,
     padding: 3,
   },
   iconFilter: {
@@ -45,11 +48,12 @@ export default StyleSheet.create({
     color: '#848484',
   },
   wrapperData: {
-    marginVertical: 25,
+    marginTop: 10,
   },
   wrapperContainer: {
     marginHorizontal: 18,
     flexDirection: 'row',
+    marginTop: 20,
   },
   image: {
     width: 101,

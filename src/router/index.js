@@ -1,5 +1,4 @@
 import React from 'react';
-import {API_URL} from '@env';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {
@@ -22,11 +21,12 @@ import {
   ViewMore,
   HistoryAdmin,
   SplashScreen,
+  UpdatePassword,
+  Filter,
 } from '../screen';
 import {NavigationContainer} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
-import {Image} from 'react-native';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -42,6 +42,11 @@ function HomeStack() {
       <Stack.Screen name="Search" options={{headerShown: false}}>
         {props => <Search {...props} />}
       </Stack.Screen>
+      <Stack.Screen
+        name="Filter"
+        component={Filter}
+        options={{headerShown: false}}
+      />
       <Stack.Screen name="View-More" options={{headerShown: false}}>
         {props => <ViewMore {...props} />}
       </Stack.Screen>
@@ -97,6 +102,13 @@ function ProfileStack() {
       <Stack.Screen
         name="Update-Profile"
         component={UpdateProfile}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Update-Password"
+        component={UpdatePassword}
         options={{
           headerShown: false,
         }}
