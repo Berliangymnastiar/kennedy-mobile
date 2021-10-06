@@ -56,17 +56,20 @@ function UpdateProfile({navigation}) {
         'Please input your name for update profile',
         ToastAndroid.SHORT,
       );
-    } else if (email === '') {
+    }
+    if (email === '') {
       return ToastAndroid.show(
         'Please input yout email for update profile',
         ToastAndroid.SHORT,
       );
-    } else if (address === '') {
+    }
+    if (address === '') {
       return ToastAndroid.show(
         'Please input your address for update profile',
         ToastAndroid.SHORT,
       );
-    } else if (phonenumber === '') {
+    }
+    if (phonenumber === '') {
       return ToastAndroid.show(
         'Please input your phonenumber for update profile',
         ToastAndroid.SHORT,

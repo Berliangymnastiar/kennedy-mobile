@@ -46,8 +46,7 @@ function Profile(props) {
   return (
     <SafeAreaView style={styles.wrapperProfile}>
       <AppStatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
-      <Pressable style={styles.wrapperBack} onPress={() => navigation.goBack()}>
-        <Icon name="arrow-back" size={26}></Icon>
+      <View style={styles.wrapperBack}>
         <Image
           source={
             image !== '' && image !== null
@@ -57,7 +56,7 @@ function Profile(props) {
           style={styles.photo}
         />
         <Text style={styles.updateProfile}>{username}</Text>
-      </Pressable>
+      </View>
       <View style={styles.wrapperText}>
         <Pressable style={styles.pressable}>
           <Text style={styles.text}>Your favourites</Text>
@@ -81,6 +80,14 @@ function Profile(props) {
           style={styles.pressable}
           onPress={() => props.navigation.navigate('Update-Profile')}>
           <Text style={styles.text}>Update Profile</Text>
+          <Icon name="arrow-forward" size={20} />
+        </Pressable>
+      </View>
+      <View style={styles.wrapperText}>
+        <Pressable
+          style={styles.pressable}
+          onPress={() => props.navigation.navigate('Update-Password')}>
+          <Text style={styles.text}>Update Password</Text>
           <Icon name="arrow-forward" size={20} />
         </Pressable>
       </View>

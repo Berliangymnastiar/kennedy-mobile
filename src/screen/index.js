@@ -17,6 +17,8 @@ import AddVehicle from './AddVehicle';
 import EditVehicle from './EditVehicle';
 import HistoryAdmin from './HistoryAdmin';
 import SplashScreen from './SplashScreen';
+import UpdatePassword from './UpdatePassword';
+import Filter from './Filter';
 
 export {
   Login,
@@ -33,6 +35,8 @@ export {
   Payment3,
   FinishPayment,
   HistoryAdmin,
+  UpdatePassword,
+  Filter,
   Search,
   ViewMore,
   AddVehicle,

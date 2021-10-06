@@ -58,7 +58,7 @@ function Register({navigation}) {
         <TextInput
           style={styles.textInput}
           placeholder="Email"
-          placeholderTextColor={'black'}
+          placeholderTextColor="#000000"
           keyboardType="email-address"
           value={email}
           onChangeText={value => setEmail(value)}
@@ -66,14 +66,14 @@ function Register({navigation}) {
         <TextInput
           style={styles.textInputMobile}
           placeholder="Username"
-          placeholderTextColor={'black'}
+          placeholderTextColor="#000000"
           value={name}
           onChangeText={value => setName(value)}
         />
         <TextInput
           style={styles.textInputPassword}
           placeholder="Password"
-          placeholderTextColor={'black'}
+          placeholderTextColor="#000000"
           value={password}
           onChangeText={value => setPassword(value)}
           secureTextEntry
