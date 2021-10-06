@@ -1,3 +1,5 @@
+import axios from 'axios';
+import {API_URL} from '@env';
 import React, {useState} from 'react';
 import {
   View,
@@ -13,7 +15,6 @@ import RNPickerSelect from 'react-native-picker-select';
 import styles from './style';
 import Icon from 'react-native-vector-icons/Ionicons';
 import iconPayment from '../../assets/images/icon-payment1.png';
-import axios from 'axios';
 
 function Payment1(props) {
   const [name, setName] = useState('');
@@ -35,7 +36,7 @@ function Payment1(props) {
 
     console.log(data);
     axios
-      .patch(`http://192.168.1.100:8000/transactions/${id}`, data)
+      .patch(`${API_URL}/transactions/${id}`, data)
       .then(res => {
         console.log(res);
         props.navigation.navigate('Payment2', {
@@ -43,7 +44,7 @@ function Payment1(props) {
           totalPrice: totalPrice,
           picture: image,
         });
-        return ToastAndroid.show('Success!', ToastAndroid.SHORT);
+        return ToastAndroid.show('Success Payment!', ToastAndroid.SHORT);
       })
       .catch(err => console.log(err));
   };

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {API_URL} from '@env';
 import React, {useState} from 'react';
 import {
   ImageBackground,
@@ -21,9 +22,11 @@ function Register({navigation}) {
   const onSubmit = () => {
     if (email === '') {
       return ToastAndroid.show('Email must be field', ToastAndroid.SHORT);
-    } else if (name === '') {
+    }
+    if (name === '') {
       return ToastAndroid.show('Username must be field', ToastAndroid.SHORT);
-    } else if (password === '') {
+    }
+    if (password === '') {
       return ToastAndroid.show('Password must be field', ToastAndroid.SHORT);
     }
 
@@ -33,9 +36,10 @@ function Register({navigation}) {
     data.append('password', password);
 
     axios
-      .post(`http://192.168.1.100:8000/auth/register`, data)
+      .post(`${API_URL}/auth/register`, data)
       .then(res => {
         console.log(res);
+        navigation.navigate('Login');
         return ToastAndroid.show(
           'success register! login now',
           ToastAndroid.SHORT,

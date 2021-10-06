@@ -16,7 +16,7 @@ export const loginAction = (body, navigation) => {
       navigation.replace('Main-Tabs');
       // console.log(response.data.result.userInfo);
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   };
 };

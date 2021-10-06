@@ -1,6 +1,6 @@
 import axios from 'axios';
-import React, {useEffect, useState} from 'react';
 import {API_URL} from '@env';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -29,7 +29,7 @@ function Payment2(props) {
 
   useEffect(() => {
     axios
-      .get(`http://192.168.1.100:8000/transactions/${id}`)
+      .get(`${API_URL}/transactions/${id}`)
       .then(result => {
         const data = result.data.result[0];
         setName(data.name);
@@ -47,7 +47,7 @@ function Payment2(props) {
     data.append('booking_code', codeBooking);
 
     axios
-      .patch(`http://192.168.1.100:8000/transactions/${id}`, data)
+      .patch(`${API_URL}/transactions/${id}`, data)
       .then(result => {
         console.log(result);
         props.navigation.navigate('Payment3', {

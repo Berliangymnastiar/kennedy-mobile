@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {API_URL} from '@env';
 import React, {useEffect, useState} from 'react';
 import DatePicker from 'react-native-date-picker';
@@ -15,7 +16,6 @@ import {
 import styles from './styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
-import axios from 'axios';
 
 function Orders(props) {
   const token = useSelector(state => state.auth.token);
@@ -75,7 +75,7 @@ function Orders(props) {
 
     console.log(data);
     axios
-      .post(`http://192.168.1.100:8000/transactions`, data)
+      .post(`${API_URL}/transactions`, data)
       .then(res => {
         const transactionId = res.data.result.insertId;
         props.navigation.navigate('Payment1', {
@@ -92,7 +92,7 @@ function Orders(props) {
     <ScrollView style={styles.container}>
       <ImageBackground
         style={styles.headerImage}
-        source={{uri: `http://192.168.1.100:8000` + image}}
+        source={{uri: `${API_URL}` + image}}
         resizeMode="cover">
         <Pressable
           style={styles.wrapperBack}

@@ -16,6 +16,7 @@ import ViewMore from './ViewMore';
 import AddVehicle from './AddVehicle';
 import EditVehicle from './EditVehicle';
 import HistoryAdmin from './HistoryAdmin';
+import SplashScreen from './SplashScreen';
 
 export {
   Login,
@@ -36,4 +37,5 @@ export {
   ViewMore,
   AddVehicle,
   EditVehicle,
+  SplashScreen,
 };
