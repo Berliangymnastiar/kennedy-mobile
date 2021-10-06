@@ -1,4 +1,5 @@
 import React from 'react';
+import {API_URL} from '@env';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {
@@ -20,9 +21,9 @@ import {
   UpdateProfile,
   ViewMore,
   HistoryAdmin,
+  SplashScreen,
 } from '../screen';
 import {NavigationContainer} from '@react-navigation/native';
-import defaultPhoto from '../assets/images/default-photo.png';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
 import {Image} from 'react-native';
@@ -84,29 +85,13 @@ function HomeStack() {
 }
 
 function ProfileStack() {
-  const photoUser = useSelector(state => state.auth.userInfo[0].picture);
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="Profile"
         component={Profile}
         options={{
-          headerTitle: 'Profile',
-          headerTitleStyle: {fontSize: 22},
-          headerStyle: {
-            backgroundColor: '#FFFFFF',
-            height: 82,
-          },
-          headerLeft: () => (
-            <Image
-              source={{uri: `http://192.168.1.100:8000` + photoUser}}
-              style={{
-                width: 60,
-                height: 60,
-                marginHorizontal: 18,
-              }}
-            />
-          ),
+          headerShown: false,
         }}
       />
       <Stack.Screen
@@ -208,7 +193,7 @@ export default function Router() {
   const token = useSelector(state => state.auth.token);
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName={'Splash-Screen'}>
         {token && (
           <Stack.Screen
             name="Main-Tabs"
@@ -219,6 +204,11 @@ export default function Router() {
         <Stack.Screen
           name="Auth"
           component={AuthStack}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Splash-Screen"
+          component={SplashScreen}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

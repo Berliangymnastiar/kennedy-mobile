@@ -78,22 +78,26 @@ const EditVehicle = props => {
         'Please input name for add vehicle',
         ToastAndroid.SHORT,
       );
-    } else if (price === '') {
+    }
+    if (price === '') {
       return ToastAndroid.show(
         'Please input price for add vehicle',
         ToastAndroid.SHORT,
       );
-    } else if (description === '') {
+    }
+    if (description === '') {
       return ToastAndroid.show(
         'Please input description for add vehicle',
         ToastAndroid.SHORT,
       );
-    } else if (location === null) {
+    }
+    if (address === null) {
       return ToastAndroid.show(
         'Please input location for add vehicle',
         ToastAndroid.SHORT,
       );
-    } else if (category === null) {
+    }
+    if (category === null) {
       return ToastAndroid.show(
         'Please input category for add vehicle',
         ToastAndroid.SHORT,

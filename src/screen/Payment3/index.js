@@ -33,7 +33,7 @@ function Payment3(props) {
     axios
       .patch(`${API_URL}/transactions/${id}`, data)
       .then(result => {
-        // console.log(result);
+        console.log(result);
         props.navigation.push('Finish-Payment', {
           id: id,
           paymentMethod: paymentMethod,

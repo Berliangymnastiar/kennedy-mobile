@@ -45,4 +45,22 @@ export default StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
   },
+  photo: {
+    width: 50,
+    height: 50,
+    marginLeft: 20,
+    marginTop: -10,
+    borderRadius: 100,
+  },
+
+  wrapperBack: {
+    paddingLeft: 18,
+    flexDirection: 'row',
+    marginTop: 10,
+  },
+  updateProfile: {
+    marginLeft: 24,
+    fontSize: 20,
+    fontFamily: 'Nunito-Bold',
+  },
 });

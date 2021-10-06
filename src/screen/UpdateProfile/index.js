@@ -132,6 +132,11 @@ function UpdateProfile({navigation}) {
             source={sourceUri ? sourceUri : defaultPhoto}
             style={styles.photoUser}
           />
+          <TouchableOpacity onPress={choosePhotoFromLibrary}>
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>Edit photo</Text>
+            </View>
+          </TouchableOpacity>
         </Pressable>
         <View style={styles.wrapperCheckbox}>
           <CheckBox

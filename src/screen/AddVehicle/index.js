@@ -27,16 +27,16 @@ const AddVehicle = props => {
   const [image, setImage] = useState({});
   const dispatch = useDispatch();
 
-  // const choosePhotoFromCamera = () => {
-  //   ImagePicker.openCamera({
-  //     width: 300,
-  //     height: 400,
-  //     cropping: true,
-  //   }).then(image => {
-  //     console.log(image.path);
-  //     setImage(image.path);
-  //   });
-  // };
+  const choosePhotoFromCamera = () => {
+    ImagePicker.openCamera({
+      width: 300,
+      height: 400,
+      cropping: true,
+    }).then(image => {
+      console.log(image);
+      setImage(image);
+    });
+  };
 
   const choosePhotoFromLibrary = () => {
     ImagePicker.openPicker({
@@ -59,22 +59,26 @@ const AddVehicle = props => {
         'Please input name for add vehicle',
         ToastAndroid.SHORT,
       );
-    } else if (price === '') {
+    }
+    if (price === '') {
       return ToastAndroid.show(
         'Please input price for add vehicle',
         ToastAndroid.SHORT,
       );
-    } else if (description === '') {
+    }
+    if (description === '') {
       return ToastAndroid.show(
         'Please input description for add vehicle',
         ToastAndroid.SHORT,
       );
-    } else if (location === null) {
+    }
+    if (location === null) {
       return ToastAndroid.show(
         'Please input location for add vehicle',
         ToastAndroid.SHORT,
       );
-    } else if (category === null) {
+    }
+    if (category === null) {
       return ToastAndroid.show(
         'Please input category for add vehicle',
         ToastAndroid.SHORT,
@@ -112,7 +116,7 @@ const AddVehicle = props => {
           </Pressable>
         </View>
         <View style={styles.wrapperCamera}>
-          <TouchableOpacity onPress={choosePhotoFromLibrary}>
+          <TouchableOpacity onPress={choosePhotoFromCamera}>
             <Image source={sourceUri} style={styles.vehicleImg} />
           </TouchableOpacity>
           <TouchableOpacity

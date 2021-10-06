@@ -1,4 +1,3 @@
-// import axios from 'axios';
 import React, {useState} from 'react';
 import {
   ImageBackground,
@@ -9,13 +8,9 @@ import {
   View,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
-import {API_URL} from '@env';
-
 import imageBackground from '../../assets/images/login-image.png';
 import {loginAction} from '../../redux/action/authAction';
-import {vehicleAction} from '../../redux/action/vehicleAction';
 import styles from './style';
-// import config from '../../../config';
 
 function Login({navigation}) {
   const [email, setEmail] = useState('');
@@ -25,7 +20,8 @@ function Login({navigation}) {
   const onSubmit = () => {
     if (email === '') {
       return ToastAndroid.show('Email must be field', ToastAndroid.SHORT);
-    } else if (password === '') {
+    }
+    if (password === '') {
       return ToastAndroid.show('Password must be field', ToastAndroid.SHORT);
     }
 
@@ -42,7 +38,6 @@ function Login({navigation}) {
         resizeMode="cover"
         style={styles.image}>
         <Text style={styles.text}>LET’S EXPLORE THE WORLD </Text>
-        {/* <Text style={{color: 'black', fontSize: 42}}>{config.API_URL}</Text> */}
         <TextInput
           style={styles.textInput}
           placeholder="Email"
