@@ -68,12 +68,25 @@ export default StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 15,
     padding: 13,
-    marginTop: 24,
+    width: 330,
+    height: 51,
+    marginTop: 20,
   },
   buttonText: {
     color: 'black',
     fontWeight: 'bold',
     fontSize: 18,
+  },
+  wrapperError: {
+    marginTop: 20,
+    backgroundColor: '#E6A1A1',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 40,
+    borderRadius: 12,
+  },
+  textError: {
+    color: 'white',
   },
   textConfirmation: {
     flexDirection: 'row',
