@@ -1,8 +1,9 @@
-import {LOGIN, LOGOUT} from './actionString';
+import {CHANGE_LOADING, LOGIN, LOGOUT} from './actionString';
 
 const initialState = {
   token: null,
   userInfo: [],
+  isLoading: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -12,6 +13,11 @@ const authReducer = (state = initialState, action) => {
         ...state,
         token: action.payload.token,
         userInfo: action.payload.userInfo,
+      };
+    case CHANGE_LOADING:
+      return {
+        ...state,
+        isLoading: action.payload,
       };
     case LOGOUT:
       return {

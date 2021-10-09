@@ -27,7 +27,7 @@ function UpdateProfile({navigation}) {
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState('');
   const [image, setImage] = useState(null);
-  const [prevImg, setPrevImg] = useState(null);
+  const [prevImg, setPrevImg] = useState(defaultPhoto);
   const [address, setAdress] = useState(null);
   const [phonenumber, setPhoneNumber] = useState(null);
 
@@ -132,7 +132,7 @@ function UpdateProfile({navigation}) {
         </Pressable>
         <Pressable style={styles.wrapperPhoto} onPress={choosePhotoFromLibrary}>
           <Image
-            source={sourceUri ? sourceUri : defaultPhoto}
+            source={!image?.path ? sourceUri : defaultPhoto}
             style={styles.photoUser}
           />
           <TouchableOpacity onPress={choosePhotoFromLibrary}>

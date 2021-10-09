@@ -1,36 +1,43 @@
 import React, {useState} from 'react';
-import {
-  ImageBackground,
-  Text,
-  TextInput,
-  ToastAndroid,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import SpinnerButton from 'react-native-spinner-button';
+import {ImageBackground, Text, TextInput, View} from 'react-native';
 import {useDispatch} from 'react-redux';
 import imageBackground from '../../assets/images/login-image.png';
 import {loginAction} from '../../redux/action/authAction';
 import styles from './style';
+import {connect} from 'react-redux';
 
-function Login({navigation}) {
+const Login = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  // const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
   const dispatch = useDispatch();
 
   const onSubmit = () => {
+    if (!email.includes('@')) {
+      return setError('Email not valid');
+    }
     if (email === '') {
-      return ToastAndroid.show('Email must be field', ToastAndroid.SHORT);
+      return setError('Email must be field');
     }
     if (password === '') {
-      return ToastAndroid.show('Password must be field', ToastAndroid.SHORT);
+      return setError('Password must be field');
     }
 
     const data = new URLSearchParams();
     data.append('email', email);
     data.append('password', password);
 
-    dispatch(loginAction(data, navigation));
+    // props.onLogin(data, props.navigation);
+
+    dispatch(loginAction(data, props.navigation));
+    // setIsLoading(true);
+    // setTimeout(() => {
+    //   setIsLoading(false);
+    // }, 2000);
   };
+
   return (
     <>
       <ImageBackground
@@ -44,7 +51,10 @@ function Login({navigation}) {
           keyboardType="email-address"
           placeholderTextColor="#000000"
           value={email}
-          onChangeText={value => setEmail(value)}
+          onChangeText={value => {
+            setEmail(value);
+            setError(false);
+          }}
         />
         <TextInput
           style={styles.textInputPassword}
@@ -57,21 +67,31 @@ function Login({navigation}) {
         <Text
           style={styles.forgotPass}
           onPress={() => {
-            navigation.navigate('Forgot-Password');
+            props.navigation.navigate('Forgot-Password');
           }}>
           Forgot Password
         </Text>
-        <TouchableOpacity onPress={onSubmit}>
-          <View style={styles.button}>
+        <SpinnerButton
+          onPress={onSubmit}
+          isLoading={props.auth.isLoading}
+          spinnerType="BallIndicator"
+          buttonStyle={styles.button}
+          indicatorCount={10}>
+          <View>
             <Text style={styles.buttonText}>Login</Text>
           </View>
-        </TouchableOpacity>
+        </SpinnerButton>
+        {error && (
+          <View style={styles.wrapperError}>
+            <Text style={styles.textError}>{error}</Text>
+          </View>
+        )}
         <View style={styles.textConfirmation}>
           <Text style={styles.textHaveAccount}>Don’t have account?</Text>
           <Text
             style={styles.textSignUp}
             onPress={() => {
-              navigation.navigate('Register');
+              props.navigation.navigate('Register');
             }}>
             Sign up now
           </Text>
@@ -79,6 +99,18 @@ function Login({navigation}) {
       </ImageBackground>
     </>
   );
-}
+};
 
-export default Login;
+const mapStateToProps = ({auth}) => ({
+  auth,
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onLogin: (data, navigation) => {
+      dispatch(loginAction(data, navigation));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {API_URL} from '@env';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -15,8 +15,11 @@ import RNPickerSelect from 'react-native-picker-select';
 import styles from './style';
 import Icon from 'react-native-vector-icons/Ionicons';
 import iconPayment from '../../assets/images/icon-payment1.png';
+import {useSelector} from 'react-redux';
 
 function Payment1(props) {
+  const userId = useSelector(state => state.auth.userInfo[0].id);
+  const token = useSelector(state => state.auth.token);
   const [name, setName] = useState('');
   const [idCard, setIdCard] = useState('');
   const [phonenumber, setPhoneNumber] = useState('');
@@ -25,6 +28,26 @@ function Payment1(props) {
   const id = props.route.params.id;
   const totalPrice = props.route.params.totalPrice;
   const image = props.route.params.picture;
+
+  useEffect(() => {
+    const getUser = props.navigation.addListener('focus', () => {
+      axios
+        .get(`${API_URL}/users/${userId}`, {
+          headers: {
+            'x-access-token': `Bearer ${token}`,
+          },
+        })
+        .then(res => {
+          console.log(res);
+          const data = res.data.result[0];
+          console.log(data);
+          setName(data.name);
+          setEmail(data.email);
+          setPhoneNumber(data.phonenumber);
+        })
+        .catch(err => console.log(err));
+    });
+  }, [props.navigation]);
 
   const onSeeOrder = () => {
     const data = new URLSearchParams();

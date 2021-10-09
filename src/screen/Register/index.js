@@ -1,33 +1,41 @@
 import axios from 'axios';
 import {API_URL} from '@env';
 import React, {useState} from 'react';
+import SpinnerButton from 'react-native-spinner-button';
 import {
   ImageBackground,
   ScrollView,
   Text,
   TextInput,
   ToastAndroid,
-  TouchableOpacity,
   View,
 } from 'react-native';
-
 import imageBackground from '../../assets/images/register-image.png';
 import styles from './style';
+import {connect, useDispatch} from 'react-redux';
+import {CHANGE_LOADING} from '../../redux/reducer/actionString';
 
-function Register({navigation}) {
+const Register = ({navigation, auth}) => {
+  const isLoading = auth.isLoading;
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  // const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const dispatch = useDispatch();
 
   const onSubmit = () => {
-    if (email === '') {
-      return ToastAndroid.show('Email must be field', ToastAndroid.SHORT);
+    if (!email.includes('@')) {
+      return setError('Email not valid');
     }
-    if (name === '') {
-      return ToastAndroid.show('Username must be field', ToastAndroid.SHORT);
+    if (email === '') {
+      return setError('Email must be field');
     }
     if (password === '') {
-      return ToastAndroid.show('Password must be field', ToastAndroid.SHORT);
+      return setError('Password must be field');
+    }
+    if (name === '') {
+      return setError('Password must be field');
     }
 
     const data = new URLSearchParams();
@@ -35,9 +43,11 @@ function Register({navigation}) {
     data.append('name', name);
     data.append('password', password);
 
+    dispatch({type: CHANGE_LOADING, payload: true});
     axios
       .post(`${API_URL}/auth/register`, data)
       .then(res => {
+        dispatch({type: CHANGE_LOADING, payload: false});
         console.log(res);
         navigation.navigate('Login');
         return ToastAndroid.show(
@@ -45,7 +55,15 @@ function Register({navigation}) {
           ToastAndroid.SHORT,
         );
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        dispatch({type: CHANGE_LOADING, payload: false});
+        console.log(err);
+      });
+
+    // setIsLoading(true);
+    // setTimeout(() => {
+    //   setIsLoading(false);
+    // }, 2000);
   };
 
   return (
@@ -61,28 +79,48 @@ function Register({navigation}) {
           placeholderTextColor="#000000"
           keyboardType="email-address"
           value={email}
-          onChangeText={value => setEmail(value)}
+          onChangeText={value => {
+            setEmail(value);
+            setError(false);
+          }}
         />
         <TextInput
           style={styles.textInputMobile}
           placeholder="Username"
           placeholderTextColor="#000000"
           value={name}
-          onChangeText={value => setName(value)}
+          onChangeText={value => {
+            setName(value);
+            setError(false);
+          }}
         />
         <TextInput
           style={styles.textInputPassword}
           placeholder="Password"
           placeholderTextColor="#000000"
           value={password}
-          onChangeText={value => setPassword(value)}
+          onChangeText={value => {
+            setPassword(value);
+            setError(false);
+          }}
           secureTextEntry
         />
-        <TouchableOpacity onPress={onSubmit}>
-          <View style={styles.button}>
+        {error && (
+          <View style={styles.wrapperError}>
+            <Text style={styles.textError}>{error}</Text>
+          </View>
+        )}
+        <SpinnerButton
+          onPress={onSubmit}
+          isLoading={isLoading}
+          spinnerType="BallIndicator"
+          buttonStyle={styles.button}
+          indicatorCount={10}>
+          <View>
             <Text style={styles.buttonText}>Register</Text>
           </View>
-        </TouchableOpacity>
+        </SpinnerButton>
+
         <View style={styles.textConfirmation}>
           <Text style={styles.textHaveAccount}>Already have account?</Text>
           <Text
@@ -95,6 +133,18 @@ function Register({navigation}) {
       </ScrollView>
     </ImageBackground>
   );
-}
+};
 
-export default Register;
+const mapStateToProps = ({auth}) => ({
+  auth,
+});
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     onLogin: (data, navigation) => {
+//       dispatch(loginAction(data, navigation));
+//     },
+//   };
+// };
+
+export default connect(mapStateToProps)(Register);

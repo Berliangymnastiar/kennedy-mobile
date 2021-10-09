@@ -16,6 +16,17 @@ export default StyleSheet.create({
     textAlign: 'left',
     marginTop: 40,
   },
+  wrapperError: {
+    marginTop: 70,
+    backgroundColor: '#E6A1A1',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 40,
+    borderRadius: 12,
+  },
+  textError: {
+    color: 'white',
+  },
   textInput: {
     textAlign: 'left',
     borderWidth: 1,
@@ -55,7 +66,9 @@ export default StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 15,
     padding: 13,
-    marginTop: 24,
+    width: 330,
+    height: 51,
+    marginTop: 60,
   },
   buttonText: {
     color: 'black',

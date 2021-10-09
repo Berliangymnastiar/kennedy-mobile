@@ -27,7 +27,7 @@ const HistoryAdmin = props => {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.wrapperHistoryOrder}>
-          <Text style={styles.historyOrder}>History Order Admin</Text>
+          <Text style={styles.historyOrder}>History Order</Text>
         </View>
         <View style={styles.wrapperData}>
           {vehicle.map(vehicle => {

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {API_URL} from '@env';
-import {View, Text, Pressable, Image} from 'react-native';
+import {View, Text, Pressable, Image, ActivityIndicator} from 'react-native';
 import styles from './style';
 import {connect} from 'react-redux';
 import {vehicleAction} from '../../redux/action/vehicleAction';
@@ -9,10 +9,15 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const ViewMore = props => {
   const title = props.route.params.title;
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    const {query} = props.route.params;
-    props.getAllVehicles(query);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      const {query} = props.route.params;
+      props.getAllVehicles(query);
+    }, 3000);
   }, []);
 
   return (
@@ -24,37 +29,47 @@ const ViewMore = props => {
         <Text style={styles.updateProfile}>{title}</Text>
       </Pressable>
       <ScrollView style={styles.wrapperData}>
-        {props.vehicle.vehicleData.map(vehicle => {
-          return (
-            <Pressable
-              style={styles.wrapperContainer}
-              key={vehicle.id}
-              onPress={() => {
-                props.navigation.navigate('Orders', {id: vehicle.id});
-              }}>
-              <Image
-                source={{uri: `${API_URL}` + vehicle.picture}}
-                style={styles.image}
-              />
-              <View style={styles.wrapperText}>
-                <Text style={styles.vehicleName}>{vehicle.name}</Text>
-                <Text style={styles.text}>
-                  Max for {vehicle.capacity} person
-                </Text>
-                <Text style={styles.text}>X km from your location</Text>
-                <Text
-                  style={
-                    vehicle.available_item > 0
-                      ? styles.textGreen
-                      : styles.textRed
-                  }>
-                  {vehicle.available_item > 0 ? 'Available' : 'Not Available'}
-                </Text>
-                <Text style={styles.textPrice}>Rp. {vehicle.price}/day</Text>
-              </View>
-            </Pressable>
-          );
-        })}
+        {isLoading === true ? (
+          <View style={styles.activityIndicator}>
+            <ActivityIndicator
+              size="large"
+              color="#00ff00"
+              animating={isLoading}
+            />
+          </View>
+        ) : (
+          props.vehicle.vehicleData.map(vehicle => {
+            return (
+              <Pressable
+                style={styles.wrapperContainer}
+                key={vehicle.id}
+                onPress={() => {
+                  props.navigation.navigate('Orders', {id: vehicle.id});
+                }}>
+                <Image
+                  source={{uri: `${API_URL}` + vehicle.picture}}
+                  style={styles.image}
+                />
+                <View style={styles.wrapperText}>
+                  <Text style={styles.vehicleName}>{vehicle.name}</Text>
+                  <Text style={styles.text}>
+                    Max for {vehicle.capacity} person
+                  </Text>
+                  <Text style={styles.text}>X km from your location</Text>
+                  <Text
+                    style={
+                      vehicle.available_item > 0
+                        ? styles.textGreen
+                        : styles.textRed
+                    }>
+                    {vehicle.available_item > 0 ? 'Available' : 'Not Available'}
+                  </Text>
+                  <Text style={styles.textPrice}>Rp. {vehicle.price}/day</Text>
+                </View>
+              </Pressable>
+            );
+          })
+        )}
       </ScrollView>
     </View>
   );

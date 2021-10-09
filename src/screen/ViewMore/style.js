@@ -45,7 +45,7 @@ export default StyleSheet.create({
     color: '#848484',
   },
   wrapperData: {
-    marginVertical: 25,
+    marginTop: 25,
   },
   wrapperContainer: {
     marginHorizontal: 18,
@@ -94,5 +94,9 @@ export default StyleSheet.create({
     marginLeft: 24,
     fontSize: 20,
     fontWeight: '600',
+  },
+  activityIndicator: {
+    flex: 1,
+    justifyContent: 'flex-start',
   },
 });
