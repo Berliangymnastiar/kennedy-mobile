@@ -92,7 +92,7 @@ class Home extends Component {
             onPressIn={this.searchHandler}
           />
         </View>
-        {this.props.auth.userInfo[0].roles === 'admin' && (
+        {this.props.auth.userInfo[0]?.roles === 'admin' && (
           <View style={styles.wrapperButton}>
             <TouchableOpacity
               style={styles.button}
@@ -207,24 +207,3 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
-
-// getCarsHandler = () => {
-//   const query = `?filter=cars`;
-//   this.props.navigation.navigate('View-More', {query: query, title: 'Cars'});
-// };
-
-// getMotorbikesHandler = () => {
-//   const query = `?filter=motorbike`;
-//   this.props.navigation.navigate('View-More', {
-//     query: query,
-//     title: 'Motorbike',
-//   });
-// };
-
-// getBikesHandler = () => {
-//   const query = `?filter=bikes`;
-//   this.props.navigation.navigate('View-More', {
-//     query: query,
-//     title: 'Bikes',
-//   });
-// };

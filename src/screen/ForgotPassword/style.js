@@ -24,14 +24,16 @@ export default StyleSheet.create({
   textInput: {
     textAlign: 'left',
     borderWidth: 1,
-    borderColor: 'white',
+    borderColor: 'rgb(240, 240, 240)',
     borderRadius: 8,
     width: '100%',
     padding: 16,
-    backgroundColor: 'white',
+    backgroundColor: 'rgb(240, 240, 240)',
+    opacity: 0.7,
     color: 'black',
-    opacity: 0.4,
-    marginVertical: 21,
+
+    fontWeight: '600',
+    fontSize: 16,
   },
   button: {
     backgroundColor: '#FFCD61',
@@ -69,5 +71,18 @@ export default StyleSheet.create({
   textSignUp: {
     color: 'white',
     fontWeight: 'bold',
+  },
+  wrapperError: {
+    backgroundColor: '#E7E5E5',
+    height: 40,
+    width: '100%',
+    justifyContent: 'center',
+    marginTop: 10,
+    borderRadius: 12,
+  },
+  textError: {
+    color: 'red',
+    fontFamily: 'Nunito-Bold',
+    textAlign: 'center',
   },
 });

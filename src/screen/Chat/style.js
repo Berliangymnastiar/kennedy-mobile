@@ -44,6 +44,7 @@ export default StyleSheet.create({
   },
   conversation: {
     alignItems: 'center',
+    marginTop: 30,
   },
   textConversation: {
     color: '#9A9A9D',

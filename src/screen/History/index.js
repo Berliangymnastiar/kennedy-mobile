@@ -11,21 +11,31 @@ import {
 } from 'react-native';
 import styles from './style';
 import trashImg from '../../assets/images/icon-trash.png';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {connect} from 'react-redux';
+import {CHANGE_LOADING} from '../../redux/reducer/actionString';
+import AnimatingLoading from '../../component/ActivityIndicator';
 
 function History(props) {
+  console.log(props);
   const userId = useSelector(state => state.auth.userInfo[0].id);
   const [vehicle, setVehicle] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getHistory = props.navigation.addListener('focus', () => {
+      dispatch({type: CHANGE_LOADING, payload: true});
       axios
         .get(`${API_URL}/transactions/history/${userId}`)
         .then(({data}) => {
+          dispatch({type: CHANGE_LOADING, payload: false});
           setVehicle(data.result);
           console.log(data);
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+          dispatch({type: CHANGE_LOADING, payload: false});
+          console.log(error);
+        });
     });
   }, [props.navigation]);
 
@@ -33,35 +43,47 @@ function History(props) {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.wrapperHistoryOrder}>
-          <Text style={styles.historyOrder}>History Order</Text>
-        </View>
-        <View style={styles.wrapperData}>
-          {vehicle.map(vehicle => {
-            return (
-              <View style={styles.wrapperContainer} key={vehicle.id}>
-                <Image
-                  source={{uri: `${API_URL}` + vehicle.picture}}
-                  style={styles.image}
-                />
-                <View style={styles.wrapperText}>
-                  <Text style={styles.vehicleName}>{vehicle.name}</Text>
-                  <Text style={styles.text}>
-                    Max for {vehicle.capacity} person
-                  </Text>
-                  <Text style={styles.textPrepaid}>
-                    Prepayment : Rp. {vehicle.price}
-                  </Text>
-                  <Text style={styles.textGreen}>Paid</Text>
-                </View>
-                <Pressable>
-                  <Image source={trashImg} style={styles.trashImg} />
-                </Pressable>
+          {props.vehicle.isLoading === true ? (
+            <AnimatingLoading isLoading={props.vehicle.isLoading} />
+          ) : (
+            <>
+              <Text style={styles.historyOrder}>History Order</Text>
+              <View style={styles.wrapperData}>
+                {vehicle.map(vehicle => {
+                  return (
+                    <View style={styles.wrapperContainer} key={vehicle.id}>
+                      <Image
+                        source={{uri: `${API_URL}` + vehicle.picture}}
+                        style={styles.image}
+                      />
+                      <View style={styles.wrapperText}>
+                        <Text style={styles.vehicleName}>{vehicle.name}</Text>
+                        <Text style={styles.text}>
+                          Max for {vehicle.capacity} person
+                        </Text>
+                        <Text style={styles.textPrepaid}>
+                          Prepayment : Rp. {vehicle.price}
+                        </Text>
+                        <Text style={styles.textGreen}>Paid</Text>
+                      </View>
+                      <Pressable>
+                        <Image source={trashImg} style={styles.trashImg} />
+                      </Pressable>
+                    </View>
+                  );
+                })}
               </View>
-            );
-          })}
+            </>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
-export default History;
+
+const mapStateToProps = ({vehicle}) => {
+  return {
+    vehicle,
+  };
+};
+export default connect(mapStateToProps)(History);

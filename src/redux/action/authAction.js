@@ -1,21 +1,22 @@
-// import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
-import {CHANGE_LOADING, LOGIN, LOGOUT} from '../reducer/actionString';
-import {API_URL} from '@env';
+import {CHANGE_LOADING, ERROR, LOGIN, LOGOUT} from '../reducer/actionString';
+import {postLogin} from '../../utils/Auth';
 
-export const loginAction = (body, navigation) => async dispatch => {
+export const loginAction = body => async dispatch => {
   dispatch({type: CHANGE_LOADING, payload: true});
   try {
-    const response = await axios.post(`${API_URL}/auth/login`, body);
+    const response = await postLogin(body);
     dispatch({
       type: LOGIN,
       payload: response.data.result,
     });
     dispatch({type: CHANGE_LOADING, payload: false});
-    navigation.replace('Main-Tabs');
   } catch (error) {
     console.log(error.message);
     dispatch({type: CHANGE_LOADING, payload: false});
+    dispatch({
+      type: ERROR,
+      payload: error.message,
+    });
   }
 };
 

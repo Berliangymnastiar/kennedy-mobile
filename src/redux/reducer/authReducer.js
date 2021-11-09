@@ -1,9 +1,11 @@
-import {CHANGE_LOADING, LOGIN, LOGOUT} from './actionString';
+import {CHANGE_LOADING, ERROR, LOGIN, LOGOUT} from './actionString';
 
 const initialState = {
   token: null,
   userInfo: [],
   isLoading: false,
+  error: '',
+  isLogin: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -13,6 +15,13 @@ const authReducer = (state = initialState, action) => {
         ...state,
         token: action.payload.token,
         userInfo: action.payload.userInfo,
+        isLogin: true,
+        error: '',
+      };
+    case ERROR:
+      return {
+        ...state,
+        error: action.payload,
       };
     case CHANGE_LOADING:
       return {
@@ -23,6 +32,9 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         token: null,
+        userInfo: [],
+        error: '',
+        isLogin: false,
       };
     default:
       return state;

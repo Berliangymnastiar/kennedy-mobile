@@ -19,19 +19,21 @@ function UpdatePassword() {
 
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState(false);
 
   const onChangePassword = () => {
     if (oldPassword === '') {
-      return ToastAndroid.show(
-        'Please input your old password for change password',
-        ToastAndroid.SHORT,
-      );
+      return setError('Please input your old password!');
     }
     if (newPassword === '') {
-      return ToastAndroid.show(
-        'Please input your new password for change password',
-        ToastAndroid.SHORT,
-      );
+      return setError('Please input your new password for change password');
+    }
+    if (newPassword.length <= 6) {
+      return setError('Password must contain 6 or more charachters');
+    }
+    if (newPassword !== confirmPassword) {
+      return setError('Password not match!');
     }
 
     const data = {
@@ -53,10 +55,7 @@ function UpdatePassword() {
       })
       .catch(err => {
         console.log(err);
-        return ToastAndroid.show(
-          'Change password failed, wrong old password!',
-          ToastAndroid.SHORT,
-        );
+        return setError('Change password failed, wrong old password!');
       });
   };
 
@@ -70,9 +69,12 @@ function UpdatePassword() {
         <TextInput
           style={styles.textInput}
           placeholder="Input your old password"
-          placeholderTextColor={'black'}
+          placeholderTextColor={'grey'}
           value={oldPassword}
-          onChangeText={value => setOldPassword(value)}
+          onChangeText={value => {
+            setOldPassword(value);
+            setError(false);
+          }}
           secureTextEntry
         />
       </View>
@@ -80,13 +82,35 @@ function UpdatePassword() {
         <Text style={styles.label}>New Password :</Text>
         <TextInput
           style={styles.textInput}
-          placeholder="Input your new password"
-          placeholderTextColor={'black'}
+          placeholder="Input new password"
+          placeholderTextColor={'grey'}
           value={newPassword}
-          onChangeText={value => setNewPassword(value)}
+          onChangeText={value => {
+            setNewPassword(value);
+            setError(false);
+          }}
           secureTextEntry
         />
       </View>
+      <View style={styles.wrapperInput}>
+        <Text style={styles.label}>Confirm Password :</Text>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Input confirm password"
+          placeholderTextColor={'grey'}
+          value={confirmPassword}
+          onChangeText={value => {
+            setConfirmPassword(value);
+            setError(false);
+          }}
+          secureTextEntry
+        />
+      </View>
+      {error && (
+        <View>
+          <Text style={{color: 'red', fontFamily: 'Nunito-Bold'}}>{error}</Text>
+        </View>
+      )}
       <TouchableOpacity onPress={onChangePassword}>
         <View style={styles.button}>
           <Text style={styles.buttonText}>Change Password</Text>

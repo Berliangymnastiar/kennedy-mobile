@@ -18,7 +18,7 @@ import iconPayment from '../../assets/images/icon-payment1.png';
 import {useSelector} from 'react-redux';
 
 function Payment1(props) {
-  const userId = useSelector(state => state.auth.userInfo[0].id);
+  const userId = useSelector(state => state.auth.userInfo[0]?.id);
   const token = useSelector(state => state.auth.token);
   const [name, setName] = useState('');
   const [idCard, setIdCard] = useState('');
@@ -89,7 +89,7 @@ function Payment1(props) {
             style={styles.textInput}
             value={idCard}
             placeholder="ID Card Number"
-            placeholderTextColor={'#000000'}
+            placeholderTextColor={'#797979'}
             keyboardType="number-pad"
             onChangeText={value => setIdCard(value)}
           />
@@ -99,7 +99,7 @@ function Payment1(props) {
             style={styles.textInput}
             value={name}
             placeholder="Name"
-            placeholderTextColor={'black'}
+            placeholderTextColor={'#797979'}
             onChangeText={value => setName(value)}
           />
         </View>
@@ -108,7 +108,7 @@ function Payment1(props) {
             style={styles.textInput}
             value={phonenumber}
             placeholder="Mobile phone (must be active)"
-            placeholderTextColor={'black'}
+            placeholderTextColor={'#797979'}
             keyboardType="number-pad"
             onChangeText={value => setPhoneNumber(value)}
           />
@@ -118,7 +118,7 @@ function Payment1(props) {
             style={styles.textInput}
             value={email}
             placeholder="Email Address"
-            placeholderTextColor={'black'}
+            placeholderTextColor={'#797979'}
             keyboardType="email-address"
             onChangeText={value => setEmail(value)}
           />

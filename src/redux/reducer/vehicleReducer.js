@@ -5,9 +5,11 @@ import {
   GET_BIKES,
   ADD_VEHICLES,
   UPDATE_VEHICLE,
+  CHANGE_LOADING,
 } from './actionString';
 
 const initialState = {
+  isLoading: false,
   vehicleData: [],
   cars: [],
   motorbikes: [],
@@ -36,6 +38,11 @@ const vehicleReducer = (state = initialState, action) => {
       return {
         ...state,
         bikes: action.payload,
+      };
+    case CHANGE_LOADING:
+      return {
+        ...state,
+        isLoading: action.payload,
       };
     case ADD_VEHICLES:
       return {

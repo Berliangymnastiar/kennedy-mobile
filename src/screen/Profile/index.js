@@ -14,7 +14,7 @@ import defaultPhoto from '../../assets/images/default-photo.png';
 
 function Profile(props) {
   const dispatch = useDispatch();
-  const id = useSelector(state => state.auth.userInfo[0].id);
+  const id = useSelector(state => state.auth.userInfo[0]?.id);
   console.log(id);
   const token = useSelector(state => state.auth.token);
   const [username, setUsername] = useState('');

@@ -21,7 +21,7 @@ import defaultPhoto from '../../assets/images/default-photo.png';
 
 function UpdateProfile({navigation}) {
   const token = useSelector(state => state.auth.token);
-  const id = useSelector(state => state.auth.userInfo[0].id);
+  const id = useSelector(state => state.auth.userInfo[0]?.id);
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -171,7 +171,7 @@ function UpdateProfile({navigation}) {
             style={styles.textInput}
             keyboardType="email-address"
             placeholder="Input your email"
-            placeholderTextColor={'black'}
+            placeholderTextColor={'#797979'}
             value={email}
             onChangeText={value => setEmail(value)}
           />
@@ -182,7 +182,7 @@ function UpdateProfile({navigation}) {
             style={styles.textInput}
             keyboardType="number-pad"
             placeholder="Input your phonenumber"
-            placeholderTextColor={'black'}
+            placeholderTextColor={'#797979'}
             value={phonenumber}
             onChangeText={phonenumber}
             onChangeText={value => setPhoneNumber(value)}
@@ -193,7 +193,7 @@ function UpdateProfile({navigation}) {
           <TextInput
             style={styles.textInput}
             placeholder="Input your address"
-            placeholderTextColor={'black'}
+            placeholderTextColor={'#797979'}
             value={address}
             onChangeText={address}
             onChangeText={value => setAdress(value)}

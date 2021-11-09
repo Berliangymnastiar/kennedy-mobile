@@ -46,10 +46,20 @@ export default StyleSheet.create({
     bottom: 70,
     width: '50%',
   },
+  buttonLibrary: {
+    backgroundColor: '#FFCD61',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 15,
+    padding: 15,
+    marginTop: 20,
+    bottom: 70,
+    width: '50%',
+  },
   buttonText: {
-    color: '#FFCD61',
+    color: 'white',
     fontFamily: 'Nunito-Bold',
-    fontSize: 14,
+    fontSize: 12,
   },
   wrapperInput: {
     marginTop: 0,
