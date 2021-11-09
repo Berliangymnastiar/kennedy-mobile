@@ -37,10 +37,9 @@ export default StyleSheet.create({
   button: {
     backgroundColor: '#FFCD61',
     alignItems: 'center',
-    justifyContent: 'center',
     borderRadius: 15,
     padding: 13,
-    marginTop: 24,
+    marginTop: 'auto',
   },
   buttonText: {
     color: 'black',

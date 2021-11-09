@@ -121,8 +121,13 @@ const AddVehicle = props => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
+            onPress={choosePhotoFromCamera}>
+            <Text style={styles.buttonText}>Add pictures from camera</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttonLibrary}
             onPress={choosePhotoFromLibrary}>
-            <Text style={styles.buttonText}>Add pictures</Text>
+            <Text style={styles.buttonText}>Add pictures from library</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.wrapperInput}>

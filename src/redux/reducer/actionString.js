@@ -7,3 +7,4 @@ export const GET_MOTORBIKES = 'GET_MOTORBIKES';
 export const GET_BIKES = 'GET_BIKES';
 export const ADD_VEHICLES = 'ADD_VEHICLES';
 export const UPDATE_VEHICLE = 'UPDATE_VEHICLE';
+export const ERROR = 'ERROR';

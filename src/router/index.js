@@ -23,6 +23,9 @@ import {
   SplashScreen,
   UpdatePassword,
   Filter,
+  ChatRoom,
+  CheckCode,
+  NewPassword,
 } from '../screen';
 import {NavigationContainer} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -135,12 +138,39 @@ function AuthStack() {
         component={ForgotPassword}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name="Check-Code"
+        component={CheckCode}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="New-Password"
+        component={NewPassword}
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function ChatStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Chat"
+        component={Chat}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Chat-Room"
+        component={ChatRoom}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 }
 
 function MainTabs() {
-  const isAdmin = useSelector(state => state.auth.userInfo[0].roles);
+  const isAdmin = useSelector(state => state.auth.userInfo[0]?.roles);
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -178,8 +208,8 @@ function MainTabs() {
         />
       )}
       <Tab.Screen
-        name="Chat"
-        component={Chat}
+        name="ChatStack"
+        component={ChatStack}
         options={{
           tabBarLabel: 'Chat',
           tabBarIcon: ({color}) => (

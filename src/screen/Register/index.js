@@ -14,28 +14,32 @@ import imageBackground from '../../assets/images/register-image.png';
 import styles from './style';
 import {connect, useDispatch} from 'react-redux';
 import {CHANGE_LOADING} from '../../redux/reducer/actionString';
+import {postRegister} from '../../utils/Auth';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const Register = ({navigation, auth}) => {
   const isLoading = auth.isLoading;
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  // const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const dispatch = useDispatch();
 
   const onSubmit = () => {
-    if (!email.includes('@')) {
-      return setError('Email not valid');
-    }
     if (email === '') {
-      return setError('Email must be field');
+      return setError('E-mail cannot be empty');
+    }
+    if (!email.includes('@')) {
+      return setError('Invalid E-mail');
     }
     if (password === '') {
-      return setError('Password must be field');
+      return setError('Password cannot be empty');
+    }
+    if (password.length <= 6) {
+      return setError('Password must contain 6 or more characters');
     }
     if (name === '') {
-      return setError('Password must be field');
+      return setError('Username cannot be empty');
     }
 
     const data = new URLSearchParams();
@@ -44,8 +48,7 @@ const Register = ({navigation, auth}) => {
     data.append('password', password);
 
     dispatch({type: CHANGE_LOADING, payload: true});
-    axios
-      .post(`${API_URL}/auth/register`, data)
+    postRegister(data)
       .then(res => {
         dispatch({type: CHANGE_LOADING, payload: false});
         console.log(res);
@@ -57,13 +60,10 @@ const Register = ({navigation, auth}) => {
       })
       .catch(err => {
         dispatch({type: CHANGE_LOADING, payload: false});
-        console.log(err);
+        if (err.message.includes(409) === true) {
+          return setError('Register failed! Email already exist');
+        }
       });
-
-    // setIsLoading(true);
-    // setTimeout(() => {
-    //   setIsLoading(false);
-    // }, 2000);
   };
 
   return (
@@ -76,7 +76,7 @@ const Register = ({navigation, auth}) => {
         <TextInput
           style={styles.textInput}
           placeholder="Email"
-          placeholderTextColor="#000000"
+          placeholderTextColor="#5C5B5B"
           keyboardType="email-address"
           value={email}
           onChangeText={value => {
@@ -87,7 +87,7 @@ const Register = ({navigation, auth}) => {
         <TextInput
           style={styles.textInputMobile}
           placeholder="Username"
-          placeholderTextColor="#000000"
+          placeholderTextColor="#5C5B5B"
           value={name}
           onChangeText={value => {
             setName(value);
@@ -97,7 +97,7 @@ const Register = ({navigation, auth}) => {
         <TextInput
           style={styles.textInputPassword}
           placeholder="Password"
-          placeholderTextColor="#000000"
+          placeholderTextColor="#5C5B5B"
           value={password}
           onChangeText={value => {
             setPassword(value);

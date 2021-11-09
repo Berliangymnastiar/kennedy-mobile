@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {API_URL} from '@env';
 import {View, Text, Pressable, Image, ActivityIndicator} from 'react-native';
 import styles from './style';
@@ -9,15 +9,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const ViewMore = props => {
   const title = props.route.params.title;
-  const [isLoading, setLoading] = useState(false);
+  // const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      const {query} = props.route.params;
-      props.getAllVehicles(query);
-    }, 3000);
+    const {query} = props.route.params;
+    props.getAllVehicles(query);
   }, []);
 
   return (
@@ -29,12 +25,12 @@ const ViewMore = props => {
         <Text style={styles.updateProfile}>{title}</Text>
       </Pressable>
       <ScrollView style={styles.wrapperData}>
-        {isLoading === true ? (
+        {props.vehicle.isLoading === true ? (
           <View style={styles.activityIndicator}>
             <ActivityIndicator
               size="large"
               color="#00ff00"
-              animating={isLoading}
+              animating={props.vehicle.isLoading}
             />
           </View>
         ) : (
@@ -75,9 +71,10 @@ const ViewMore = props => {
   );
 };
 
-const mapStateToProps = ({vehicle}) => {
+const mapStateToProps = ({vehicle, auth}) => {
   return {
     vehicle,
+    auth,
   };
 };
 

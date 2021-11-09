@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
+import socket from '../../component/Socket';
 import SpinnerButton from 'react-native-spinner-button';
 import {ImageBackground, Text, TextInput, View} from 'react-native';
 import {useDispatch} from 'react-redux';
@@ -10,33 +11,50 @@ import {connect} from 'react-redux';
 const Login = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
   const dispatch = useDispatch();
+  // console.log(props.auth.error);
+  // console.log(props.auth);
+  // console.log(props.auth.isLogin);
+
+  // console.log(error);
 
   const onSubmit = () => {
-    if (!email.includes('@')) {
-      return setError('Email not valid');
-    }
     if (email === '') {
-      return setError('Email must be field');
+      return setErrorMessage('E-mail cannot be empty');
+    }
+    if (!email.includes('@')) {
+      return setErrorMessage('Invalid email');
     }
     if (password === '') {
-      return setError('Password must be field');
+      return setErrorMessage('Password cannot be empty');
     }
 
     const data = new URLSearchParams();
     data.append('email', email);
     data.append('password', password);
 
-    // props.onLogin(data, props.navigation);
-
-    dispatch(loginAction(data, props.navigation));
-    // setIsLoading(true);
-    // setTimeout(() => {
-    //   setIsLoading(false);
-    // }, 2000);
+    dispatch(loginAction(data));
   };
+
+  const isInitialMount = useRef(true);
+  useEffect(() => {
+    const errorLogin = props.auth.error;
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else {
+      if (props.auth.isLogin === true) {
+        socket.on('connect');
+        props.navigation.replace('Main-Tabs');
+      }
+      if (errorLogin?.includes(404) === true) {
+        return setErrorMessage('Email not found!');
+      }
+      if (errorLogin?.includes(401) === true) {
+        return setErrorMessage('Incorrect email or password');
+      }
+    }
+  }, [props.auth.error, props.auth.isLogin]);
 
   return (
     <>
@@ -49,19 +67,22 @@ const Login = props => {
           style={styles.textInput}
           placeholder="Email"
           keyboardType="email-address"
-          placeholderTextColor="#000000"
+          placeholderTextColor="#5C5B5B"
           value={email}
           onChangeText={value => {
             setEmail(value);
-            setError(false);
+            setErrorMessage(false);
           }}
         />
         <TextInput
           style={styles.textInputPassword}
           placeholder="Password"
-          placeholderTextColor="#000000"
+          placeholderTextColor="#5C5B5B"
           value={password}
-          onChangeText={value => setPassword(value)}
+          onChangeText={value => {
+            setPassword(value);
+            setErrorMessage(false);
+          }}
           secureTextEntry
         />
         <Text
@@ -81,9 +102,9 @@ const Login = props => {
             <Text style={styles.buttonText}>Login</Text>
           </View>
         </SpinnerButton>
-        {error && (
+        {errorMessage && (
           <View style={styles.wrapperError}>
-            <Text style={styles.textError}>{error}</Text>
+            <Text style={styles.textError}>{errorMessage}</Text>
           </View>
         )}
         <View style={styles.textConfirmation}>
@@ -107,8 +128,8 @@ const mapStateToProps = ({auth}) => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    onLogin: (data, navigation) => {
-      dispatch(loginAction(data, navigation));
+    onLogin: data => {
+      dispatch(loginAction(data));
     },
   };
 };

@@ -9,6 +9,7 @@ import {
 } from '../../utils/Vehicle';
 import {
   ADD_VEHICLES,
+  CHANGE_LOADING,
   GET_BIKES,
   GET_CARS,
   GET_MOTORBIKES,
@@ -18,56 +19,68 @@ import {
 
 export const vehicleAction = body => {
   return async dispatch => {
+    dispatch({type: CHANGE_LOADING, payload: true});
     try {
       const response = await getVehicles(body);
       dispatch({
         type: GET_VEHICLES,
         payload: response.data.result,
       });
+      dispatch({type: CHANGE_LOADING, payload: false});
     } catch (error) {
       console.log(error);
+      dispatch({type: CHANGE_LOADING, payload: false});
     }
   };
 };
 
 export const getCars = () => {
   return async dispatch => {
+    dispatch({type: CHANGE_LOADING, payload: true});
     try {
       const response = await getVehicleCars();
       dispatch({
         type: GET_CARS,
         payload: response.data.result,
       });
+      dispatch({type: CHANGE_LOADING, payload: false});
     } catch (error) {
       console.log(error);
+      dispatch({type: CHANGE_LOADING, payload: false});
     }
   };
 };
 
 export const getMotorbikes = () => {
   return async dispatch => {
+    dispatch({type: CHANGE_LOADING, payload: true});
     try {
       const response = await getVehicleMotorbikes();
       dispatch({
         type: GET_MOTORBIKES,
         payload: response.data.result,
       });
+      dispatch({type: CHANGE_LOADING, payload: false});
     } catch (error) {
       console.log(error);
+      dispatch({type: CHANGE_LOADING, payload: false});
     }
   };
 };
 
 export const getBikes = () => {
   return async dispatch => {
+    dispatch({type: CHANGE_LOADING, payload: true});
     try {
       const response = await getVehicleBikes();
       dispatch({
         type: GET_BIKES,
         payload: response.data.result,
       });
+      dispatch({type: CHANGE_LOADING, payload: false});
     } catch (error) {
       console.log(error);
+      dispatch({type: CHANGE_LOADING, payload: false});
     }
   };
 };
@@ -88,7 +101,7 @@ export const addVehicles = (data, props) => {
   };
 };
 
-export const editVehicle = (data, id, props) => {
+export const editVehicle = (data, id) => {
   return async dispatch => {
     try {
       const response = await updateVehicle(data, id);

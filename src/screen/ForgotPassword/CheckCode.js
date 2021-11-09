@@ -10,40 +10,43 @@ import {
   TouchableOpacity,
   ToastAndroid,
 } from 'react-native';
-import {connect, useDispatch} from 'react-redux';
+
 import imageBackground from '../../assets/images/forgot-image.png';
 import arrowBack from '../../assets/images/chevron-left.png';
 
 import styles from './style';
+import {connect, useDispatch} from 'react-redux';
 import {CHANGE_LOADING} from '../../redux/reducer/actionString';
 import AnimatingLoading from '../../component/ActivityIndicator';
 
-const ForgotPassword = props => {
-  const [email, setEmail] = useState('');
+const CheckCode = props => {
+  const email = props.route.params.email;
+  const [code, setCode] = useState(null);
   const [error, setError] = useState(false);
   const dispatch = useDispatch();
 
-  const onSubmitEmail = () => {
-    if (email === '') {
-      return setError('Please input your email!');
+  const onSendCode = () => {
+    if (code === null) {
+      return setError('Please input your code for change password');
     }
     const data = new URLSearchParams();
     data.append('email', email);
+    data.append('code', code);
     dispatch({type: CHANGE_LOADING, payload: true});
     axios
-      .post(`${API_URL}/users/forgot-password`, data)
+      .post(`${API_URL}/users/check-code`, data)
       .then(res => {
         console.log(res);
         dispatch({type: CHANGE_LOADING, payload: false});
-        props.navigation.navigate('Check-Code', {email: email});
-        return ToastAndroid.show('Success get code', ToastAndroid.SHORT);
+        props.navigation.navigate('New-Password', {code: code, email: email});
+        return ToastAndroid.show('Success send code', ToastAndroid.SHORT);
       })
       .catch(err => {
         console.log(err);
+        setError('Code not valid!');
         dispatch({type: CHANGE_LOADING, payload: false});
       });
   };
-
   return (
     <>
       {props.auth.isLoading === true ? (
@@ -56,36 +59,44 @@ const ForgotPassword = props => {
           <View style={styles.wrapTextBack}>
             <Image
               source={arrowBack}
-              onPress={() => navigation.navigate('Login')}
+              onPress={() => props.navigation.navigate('Login')}
             />
             <Text
               style={styles.textBack}
-              onPress={() => navigation.navigate('Login')}>
+              onPress={() => props.navigation.navigate('Login')}>
               Back
             </Text>
           </View>
           <Text style={styles.text}>THAT’S OKAY, WE GOT YOUR BACK </Text>
           <Text style={styles.textLabel}>
-            Enter your email to get reset password code
+            Enter your code for change password
           </Text>
           <TextInput
             style={styles.textInput}
-            placeholder="Enter your email adress"
-            placeholderTextColor={'#4E4E4E'}
+            placeholder="Enter your code"
+            placeholderTextColor={'#000000'}
             onChangeText={value => {
-              setEmail(value);
+              setCode(value);
               setError(false);
             }}
-            value={email}
+            value={code}
           />
           {error && (
             <View style={styles.wrapperError}>
               <Text style={styles.textError}>{error}</Text>
             </View>
           )}
-          <TouchableOpacity onPress={onSubmitEmail}>
+          <TouchableOpacity onPress={onSendCode}>
             <View style={styles.button}>
-              <Text style={styles.buttonText}>Get Code</Text>
+              <Text style={styles.buttonText}>Send Code</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('#');
+            }}>
+            <View style={styles.buttonResend}>
+              <Text style={styles.buttonText}>Resend Code</Text>
             </View>
           </TouchableOpacity>
         </ImageBackground>
@@ -100,4 +111,4 @@ const mapStateToProps = ({auth}) => {
   };
 };
 
-export default connect(mapStateToProps)(ForgotPassword);
+export default connect(mapStateToProps)(CheckCode);
