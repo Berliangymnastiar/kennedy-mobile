@@ -1,6 +1,13 @@
 import React, {useEffect} from 'react';
 import {API_URL} from '@env';
-import {View, Text, Pressable, Image, ActivityIndicator} from 'react-native';
+import {
+  View,
+  Text,
+  Pressable,
+  Image,
+  ActivityIndicator,
+  FlatList,
+} from 'react-native';
 import styles from './style';
 import {connect} from 'react-redux';
 import {vehicleAction} from '../../redux/action/vehicleAction';
@@ -10,6 +17,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const ViewMore = props => {
   const title = props.route.params.title;
   // const [isLoading, setLoading] = useState(false);
+  console.log(props.vehicle);
 
   useEffect(() => {
     const {query} = props.route.params;
@@ -34,7 +42,46 @@ const ViewMore = props => {
             />
           </View>
         ) : (
-          props.vehicle.vehicleData.map(vehicle => {
+          // <View>
+          //   <FlatList
+          //     data={props.vehicle.vehicleData}
+          //     renderItem={({item}) => {
+          //       console.log(item);
+          //       return (
+          //         <Pressable
+          //           style={styles.wrapperContainer}
+          //           key={item.id}
+          //           onPress={() => {
+          //             props.navigation.navigate('Orders', {id: item.id});
+          //           }}>
+          //           <Image
+          //             source={{uri: `${API_URL}` + item.picture}}
+          //             style={styles.image}
+          //           />
+          //           <View style={styles.wrapperText}>
+          //             <Text style={styles.vehicleName}>{item.name}</Text>
+          //             <Text style={styles.text}>
+          //               Max for {item.capacity} person
+          //             </Text>
+          //             <Text style={styles.text}>X km from your location</Text>
+          //             <Text
+          //               style={
+          //                 item.available_item > 0
+          //                   ? styles.textGreen
+          //                   : styles.textRed
+          //               }>
+          //               {item.available_item > 0
+          //                 ? 'Available'
+          //                 : 'Not Available'}
+          //             </Text>
+          //             <Text style={styles.textPrice}>Rp. {item.price}/day</Text>
+          //           </View>
+          //         </Pressable>
+          //       );
+          //     }}
+          //   />
+          // </View>
+          props.vehicle.vehicleData.result.map(vehicle => {
             return (
               <Pressable
                 style={styles.wrapperContainer}

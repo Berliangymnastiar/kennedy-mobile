@@ -22,9 +22,10 @@ export const vehicleAction = body => {
     dispatch({type: CHANGE_LOADING, payload: true});
     try {
       const response = await getVehicles(body);
+      console.log(response.data);
       dispatch({
         type: GET_VEHICLES,
-        payload: response.data.result,
+        payload: response.data,
       });
       dispatch({type: CHANGE_LOADING, payload: false});
     } catch (error) {

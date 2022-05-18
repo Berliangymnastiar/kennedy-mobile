@@ -1,3 +1,5 @@
+import axios from 'axios';
+import {API_URL} from '@env';
 import styles from './style';
 import {connect} from 'react-redux';
 import React, {Component} from 'react';
@@ -10,6 +12,7 @@ import {
   Pressable,
   TextInput,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import CardImage from '../../component/CardImage';
 import {
@@ -18,6 +21,7 @@ import {
   getMotorbikes,
   vehicleAction,
 } from '../../redux/action/vehicleAction';
+import {getVehicles} from '../../utils/Vehicle';
 
 class Home extends Component {
   constructor(props) {
@@ -28,6 +32,8 @@ class Home extends Component {
       cars: [],
       bikes: [],
       motorbike: [],
+      nextPage: null,
+      allVehicles: [],
     };
   }
 
@@ -38,6 +44,11 @@ class Home extends Component {
   searchHandler = () => {
     const query = `?name=${this.state.vehicleName}`;
     this.props.navigation.navigate('Search', {query: query});
+  };
+
+  handleGetAllVehicles = () => {
+    const query = `?filter=`;
+    this.props.navigation.navigate('View-More', {query, title: 'All Vehicles'});
   };
 
   getCarsHandler = () => {
@@ -58,12 +69,23 @@ class Home extends Component {
     this.props.navigation.navigate('View-More', {query: query, title: 'Bike'});
   };
 
+  getAllVehiclesHandler = () => {
+    const query = `?filter=`;
+    return getVehicles(query).then(result => {
+      console.log(result.data.result);
+      this.setState({allVehicles: result.data.result});
+      this.setState({nextPage: result.data.info.nextPage});
+    });
+  };
+
   componentDidMount() {
     this.getByCategory = this.props.navigation.addListener('focus', () => {
       this.props.getByCars();
       this.props.getByMotorbike();
       this.props.getByBikes();
+      // this.props.getAllVehicles(query, this.state.nextPage);
     });
+    this.getAllVehiclesHandler();
   }
 
   componentWillUnmount() {
@@ -71,6 +93,11 @@ class Home extends Component {
   }
 
   render() {
+    console.log('all Vehicles', this.state.allVehicles);
+    console.log('Next Page', this.state.nextPage);
+    // console.log(this.props.vehicle.vehicleData.result);
+    // console.log('nex page', this.props.vehicle.vehicleData.info.nextPage);
+    // const nextPage = this.props.vehicle.vehicleData.info.nextPage;
     return (
       <ScrollView style={styles.container}>
         <Image
@@ -101,6 +128,62 @@ class Home extends Component {
             </TouchableOpacity>
           </View>
         )}
+        <View style={styles.viewSection}>
+          <Text style={styles.textCategory}>All Vehicles</Text>
+          <Pressable onPress={this.handleGetAllVehicles}>
+            <Text style={styles.viewMore}>
+              View more{'  '}
+              <Image
+                source={require('../../assets/images/chevron-right.png')}
+              />
+            </Text>
+          </Pressable>
+        </View>
+        <View horizontal={true} style={styles.viewSectionImage}>
+          <FlatList
+            horizontal
+            data={this.state.allVehicles}
+            renderItem={({item}) => {
+              console.log(item);
+              return (
+                <Pressable
+                  onPress={async () => {
+                    await this.props.navigation.navigate('Orders', {
+                      id: item.id,
+                    });
+                  }}>
+                  <CardImage picture={item.picture} />
+                </Pressable>
+              );
+            }}
+            keyExtractor={(_, index) => index}
+            onEndReached={() => {
+              this.state.nextPage !== null &&
+                axios.get(`${API_URL}` + this.state.nextPage).then(result => {
+                  this.setState({
+                    allVehicles: [
+                      ...this.state.allVehicles,
+                      ...result.data.result,
+                    ],
+                    nextPage: result.data.info.nextPage,
+                  });
+                });
+            }}
+          />
+          {/* {this.props.vehicle.vehicleData.map(vehicle => {
+            return (
+              <Pressable
+                key={vehicle.id}
+                onPress={async () => {
+                  await this.props.navigation.navigate('Orders', {
+                    id: vehicle.id,
+                  });
+                }}>
+                <CardImage key={vehicle.id} picture={vehicle.picture} />
+              </Pressable>
+            );
+          })} */}
+        </View>
         <View style={styles.viewSection}>
           <Text style={styles.textCategory}>Cars</Text>
           <Pressable onPress={this.getCarsHandler}>

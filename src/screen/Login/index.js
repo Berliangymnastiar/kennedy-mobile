@@ -108,7 +108,7 @@ const Login = props => {
           </View>
         )}
         <View style={styles.textConfirmation}>
-          <Text style={styles.textHaveAccount}>Don’t have account?</Text>
+          <Text style={styles.textHaveAccount}>Don’t have account? </Text>
           <Text
             style={styles.textSignUp}
             onPress={() => {
